@@ -98,3 +98,26 @@ Method: viewport emulation; layout/geometry asserted from the DOM (`Range` / `ge
 - Motion: `getAnimations()` shows exactly two animations — `hero-float-a` 7000ms, 0→-8px, alternate, infinite, no delay; `hero-float-b` 8500ms, 0→+6px, alternate, infinite, delay 800ms — both on `.hero-card__float`; none on the photo or the outer wrappers. Reduced motion: stylesheet inspection shows animations only inside `no-preference` plus an explicit `reduce` override → structural PASS; **emulated `prefers-reduced-motion: reduce` NOT RUN** (the pane has no media emulation).
 - Contrast (estimated from screenshots): sub-copy `#BDBDBF` over the photo — median background 5.9:1 @1440, 8.5:1 @1024, ≥10:1 on the solid area below the photo (<1024); title white ≥12:1 (median). The brightest 5% of background pixels fall lower (≈3:1), as in the approved design. CTA white-on-orange 3.55:1 (A11/O08).
 - NOT RUN: Lighthouse / Core Web Vitals (LCP, CLS, INP), emulated reduced motion, Safari/Firefox, real devices, hard reload at a restored mid-page scroll, browser zoom / larger default font size. The pane shows a 15px scrollbar, so `100vw`-based interpolation is up to 15px off against the layout width at the breakpoints.
+
+## Hero correction — full-viewport height & full-bleed photo (2026-11-12)
+Method: production build (`next start`) in the Claude desktop Browser pane; DOM/geometry assertions + `scrollTo` for header state on a temporary Hero + filler page (removed). Screenshots (pane-scaled): `docs/qa-screenshots/hero-viewport-fix/{before,after}-{1440x900,1920x1080,390x844}.jpg`.
+
+| Viewport | Hero h | Fills viewport | White gap below | Photo box (left, w×h) | Overflow | Card/text overlap | Header flips to white at Hero-bottom-from-top |
+|---|---|---|---|---|---|---|---|
+| 320×640 | 797 | content taller (OK) | none | 0, 320×402 | none | none | 160 |
+| 390×844 | 844 | yes (=844) | none | 0, 390×472 | none | none | 160 |
+| 390×667 | 773 | content taller (OK) | none | 0, 390×400 | none | none | 160 |
+| 744×1024 | 1024 | yes | none | 0, 744×661 | none | none | 160 |
+| 1024×768 | 768 | yes | none | 0, 1009×768 | none | none | 160 |
+| 1280×720 | 720 | yes | none | 0, 1265×719 | none | none | 168 |
+| 1366×768 | 768 | yes | none | 0, 1351×768 | none | none | 168 |
+| 1440×900 | 900 | yes | none | 0, 1425×900 | none | none | 168 |
+| 1440×560 | 680 | content/reference taller (OK) | none | 0, 1425×679 | none | none | 168 |
+| 1920×1080 | 1080 | yes | none | 0, 1905×1079 (full width) | none | none | 168 |
+| 1920×700 | 760 | reference minimum (OK) | none | 0, 1905×759 | none | none | 168 |
+
+(Photo/box widths are 15px below the viewport where the pane shows a vertical scrollbar.) All rows: title on 2 rows, description 2 rows (3 at 390, 4 at 320), no clipped text, card B inside the viewport, header transparent at top and mid-Hero, white just past the boundary and 300px beyond, transparent again at the top — **PASS**.
+- Before/after (1920×1080): mean luminance of the 30px left/right strips 3.0/3.0 → 57.3/81.2 (photo now continues to the edges); bottom 12px row of the 1440×900 capture 255 (white page exposed) → 10 (dark fade).
+- Before/after (1440×900, 390×844): white area below the Hero removed; Hero fills the viewport.
+- Fixed a faint 1px line above the bottom shade on fractional heights (photo trimmed 1px).
+- Reduced motion: CSS for the two floats is unchanged (only `no-preference`, explicit `reduce` override). Emulated reduce, Lighthouse/CLS, Safari/Firefox, real devices, iOS Safari `svh` behaviour: **NOT RUN**. Layout is static (no JS-driven sizing), photo has fixed intrinsic size, so no layout shift is expected, but it was not measured.

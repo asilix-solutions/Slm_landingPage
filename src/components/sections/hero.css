@@ -7,9 +7,18 @@
  *    744: stacked — photo band 386px, text below, full-width buttons
  *    390: stacked — photo band 400px (photo zoomed ~217%), full-width buttons
  *
- * Between references, offsets/sizes are interpolated linearly with
- * calc()/clamp() on the viewport width. Above 1440 the hero "stage" stays
- * 1440px wide and centred; its photo edges fade into the page background.
+ * Between references, offsets/sizes are interpolated with calc()/clamp() on
+ * the viewport width.
+ *
+ * Height: the references are only a minimum. The Hero is at least one full
+ * small-viewport height (svh, so mobile browser chrome never resizes it) and
+ * grows if its content needs more. Extra height goes to the photograph
+ * (cover-scaled, never stretched) and shifts the text/cards down in
+ * proportion, so the composition stays balanced on tall screens.
+ *
+ * Width: the photograph and shades are full-bleed. Only the text column and
+ * the floating cards are anchored to a centred 1440px "canvas"
+ * (`--canvas-pad` = space on each side beyond 1440px).
  *
  * Layer order (z-index): photo 0, card A 1, side shade 2, card B 3,
  * bottom shade 4, text 5.
@@ -19,65 +28,60 @@
   --hero-bg: #030304;
   --hero-gutter: 1rem;
   --hero-col: 100%;
+  --vh-unit: 100vh; /* fallback; svh below */
 
-  /* stacked layout (< 1024px): photo band height + where the text starts */
+  /* stacked layout (< 1024px): minimum photo band + how far the text
+     overlaps the bottom of the band */
   --media-h: calc(400px - (100vw - 390px) * 0.0395);
-  --content-top: calc(var(--media-h) - 31.2px + (100vw - 390px) * 0.028);
+  --content-overlap: calc(31.2px - (100vw - 390px) * 0.028);
+
+  /* side-by-side layout (≥ 1024px): reference hero height */
+  --design-h: clamp(569px, calc(295.8px + 26.68vw), 760px);
 
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--vh-unit);
   overflow: hidden;
   background-color: var(--hero-bg);
   color: #fff;
 }
 
-.hero__stage {
-  position: relative;
-  max-width: 1440px;
-  margin-inline: auto;
-  padding-top: var(--content-top);
-  padding-bottom: 4rem;
+@supports (height: 100svh) {
+  .hero {
+    --vh-unit: 100svh;
+  }
 }
 
-/* ---------- media layers ---------- */
+.hero__stage {
+  position: relative;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ---------- media layers (full-bleed) ---------- */
 
 .hero__media {
-  position: absolute;
-  inset-inline: 0;
-  top: 0;
-  height: var(--media-h);
+  position: relative;
+  flex: 1 0 auto;
+  min-height: var(--media-h);
   overflow: hidden;
   background-color: var(--hero-bg);
 }
 
-@media (min-width: 90.01rem) {
-  /* Wider than the 1440 design: dissolve the stage edges into the page. */
-  .hero__media {
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 6%,
-      #000 94%,
-      transparent
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 6%,
-      #000 94%,
-      transparent
-    );
-  }
-}
-
 .hero__photo {
   position: absolute;
+  inset: 0;
   z-index: 0;
+  width: 100%;
+  /* 1px short of the box bottom: on fractional heights the photo's antialiased
+     last row would otherwise survive under the bottom shade as a faint line. */
+  height: calc(100% - 1px);
   max-width: none;
-  height: 100%;
-  width: auto;
-  /* 390 → 744: photo shifts from -47.6px to -20.5px (mirrored image coords) */
-  left: calc(100vw * 0.0766 - 77.5px);
-  top: 0;
+  object-fit: cover; /* cover-scaled, never stretched */
+  object-position: 10% 0; /* mirrored photo: keeps the subject (left of centre) in frame */
 }
 
 .hero__shade {
@@ -95,12 +99,13 @@
   );
 }
 
+/* Soft fade into the page colour over the last ~30% of the Hero. */
 .hero__shade--bottom {
   z-index: 4;
   background: linear-gradient(
     to bottom,
-    rgb(3 3 4 / 0) 62%,
-    rgb(3 3 4 / 0.8) 92%,
+    rgb(3 3 4 / 0) 70%,
+    rgb(3 3 4 / 0.72) 92%,
     rgb(3 3 4 / 1) 100%
   );
 }
@@ -186,8 +191,10 @@
 .hero__content {
   position: relative;
   z-index: 5;
+  /* text overlaps the bottom of the photo band by a design-measured amount */
+  margin-top: calc(var(--content-overlap) * -1);
+  padding: 0 var(--hero-gutter) 4rem;
   max-width: calc(var(--hero-col) + var(--hero-gutter) * 2);
-  padding-inline: var(--hero-gutter);
 }
 
 .hero__title {
@@ -222,17 +229,25 @@
   margin-top: 33px;
 }
 
+/* ---------- 560 → 743: mobile, photo focal point drifts toward 744's crop ---------- */
+
+@media (min-width: 35rem) {
+  .hero__photo {
+    object-position: 20% 0;
+  }
+}
+
 /* ---------- 744 → 1023: stacked, tablet proportions ---------- */
 
 @media (min-width: 46.5rem) {
   .hero {
     --hero-gutter: 2rem;
     --media-h: 51.9vw;
-    --content-top: calc(var(--media-h) - 21.3px);
+    --content-overlap: 21.3px;
   }
 
   .hero__photo {
-    left: -2.75vw;
+    object-position: 28% 0;
   }
 
   .hero__shade--side {
@@ -240,15 +255,6 @@
       28deg,
       rgb(3 3 4 / 0) 45%,
       rgb(3 3 4 / 1) 89%
-    );
-  }
-
-  .hero__shade--bottom {
-    background: linear-gradient(
-      to bottom,
-      rgb(3 3 4 / 0) 62%,
-      rgb(3 3 4 / 0.8) 88.5%,
-      rgb(3 3 4 / 1) 100%
     );
   }
 
@@ -281,30 +287,49 @@
 
 @media (min-width: 64rem) {
   .hero {
-    --hero-h: clamp(569px, calc(295.8px + 26.68vw), 760px);
-    --media-h: var(--hero-h);
+    --hero-min: max(var(--vh-unit), var(--design-h));
+    /* height beyond the reference design: shared out between photo scale,
+       text and cards */
+    --extra-h: calc(var(--hero-min) - var(--design-h));
+    --canvas-pad: max(0px, calc((100% - 1440px) / 2));
+    /* where the subject's centre sits (px from the canvas' left edge):
+       411px in the 1024 reference → 519px in the 1440 reference */
+    --man-x: clamp(411px, calc(411px + (100vw - 1024px) * 0.2596), 519px);
     --content-top: clamp(
       130.4px,
       calc(130.4px + (100vw - 1024px) * 0.0829),
       164.9px
     );
     --hero-col: clamp(496px, calc(496px + (100vw - 1024px) * 0.1346), 552px);
-  }
 
-  .hero__stage {
-    height: var(--hero-h);
-    padding-bottom: 0;
+    min-height: var(--hero-min);
   }
 
   .hero__media {
-    height: 100%;
+    position: absolute;
+    inset: 0;
+    min-height: 0;
   }
 
+  /*
+   * Full-bleed cover photo. Image width when covering = max(viewport, height ×
+   * 2.1163). The subject (0.363 of the image width) is pinned to --man-x on
+   * the 1440 canvas so the floating cards keep their place on the subject,
+   * nudged right by 12.5% of any zoom beyond 1440px so a larger subject grows
+   * away from card A; clamped so the image always covers the box.
+   */
   .hero__photo {
-    width: calc(100% + max(0px, 1440px - 100vw) * 0.4808);
-    height: auto;
-    left: calc(max(0px, 1440px - 100vw) * -0.0745);
-    top: calc(max(0px, 1440px - 100vw) * -0.0288);
+    --img-w: max(100vw, calc(var(--hero-min) * 2.1163));
+    object-position:
+      clamp(
+        calc(100vw - var(--img-w)),
+        calc(
+          max(0px, (100vw - 1440px) / 2) + var(--man-x) +
+            max(0px, var(--img-w) - 1440px) * 0.125 - 0.363 * var(--img-w)
+        ),
+        0px
+      )
+      0;
   }
 
   .hero__shade--side {
@@ -315,25 +340,37 @@
     );
   }
 
-  .hero__shade--bottom {
-    background: linear-gradient(
-      to bottom,
-      rgb(3 3 4 / 0) 62%,
-      rgb(3 3 4 / 0.8) 92%,
-      rgb(3 3 4 / 1) 100%
-    );
-  }
-
   .hero-card--a {
-    left: clamp(39.7px, calc(41.8px - (100vw - 1024px) * 0.005), 41.8px);
-    top: clamp(142.8px, calc(142.8px + (100vw - 1024px) * 0.0409), 159.8px);
+    left: calc(
+      var(--canvas-pad) +
+        clamp(39.7px, calc(41.8px - (100vw - 1024px) * 0.005), 41.8px)
+    );
+    top: calc(
+      clamp(142.8px, calc(142.8px + (100vw - 1024px) * 0.0409), 159.8px) +
+        var(--extra-h) * 0.235
+    );
     width: clamp(207.9px, calc(207.9px + (100vw - 1024px) * 0.1805), 283px);
   }
 
   .hero-card--b {
-    left: clamp(315.7px, calc(315.7px + (100vw - 1024px) * 0.3733), 471px);
-    top: clamp(400.8px, calc(400.8px + (100vw - 1024px) * 0.1183), 450px);
+    left: calc(
+      var(--canvas-pad) +
+        clamp(315.7px, calc(315.7px + (100vw - 1024px) * 0.3733), 471px)
+    );
+    top: calc(
+      clamp(400.8px, calc(400.8px + (100vw - 1024px) * 0.1183), 450px) +
+        var(--extra-h) * 0.662
+    );
     width: clamp(311.6px, calc(311.6px + (100vw - 1024px) * 0.0418), 329px);
+  }
+
+  .hero__content {
+    flex: 1 1 auto;
+    margin-top: 0;
+    /* right-aligned (inline-start in RTL) on the 1440 canvas */
+    margin-inline-start: max(0px, calc((100% - 1440px) / 2));
+    padding-top: calc(var(--content-top) + var(--extra-h) * 0.45);
+    padding-bottom: 0;
   }
 
   .hero__title {
@@ -360,13 +397,26 @@
     --hero-gutter: 5rem;
   }
 
+  /* Reference shade, anchored to the 1440 canvas. */
   .hero__shade--side {
     background: linear-gradient(
       to right,
-      rgb(3 3 4 / 0) 40%,
-      rgb(3 3 4 / 0.7) 92.3%
+      rgb(3 3 4 / 0) calc(var(--canvas-pad) + min(100%, 1440px) * 0.4),
+      rgb(3 3 4 / 0.7) calc(var(--canvas-pad) + min(100%, 1440px) * 0.923)
     );
   }
+}
 
+/* ---------- > 1440: the photo keeps going; the shade eases off beyond the text ---------- */
 
+@media (min-width: 90.01rem) {
+  .hero__shade--side {
+    background: linear-gradient(
+      to right,
+      rgb(3 3 4 / 0) calc(var(--canvas-pad) + 576px),
+      rgb(3 3 4 / 0.7) calc(var(--canvas-pad) + 1329px),
+      rgb(3 3 4 / 0.55) calc(var(--canvas-pad) + 1440px),
+      rgb(3 3 4 / 0.2) 100%
+    );
+  }
 }

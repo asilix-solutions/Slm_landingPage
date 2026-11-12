@@ -30,7 +30,7 @@ export function Hero() {
             alt=""
             width={1824}
             height={862}
-            sizes="(min-width: 1024px) 125vw, (min-width: 744px) 110vw, 220vw"
+            sizes="(min-width: 1440px) 135vw, (min-width: 1024px) 125vw, (min-width: 744px) 112vw, 220vw"
             loading="eager"
             fetchPriority="high"
             className="hero__photo"

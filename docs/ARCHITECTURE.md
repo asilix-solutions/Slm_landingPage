@@ -45,3 +45,6 @@ Fixed `SiteHeader` in the root layout. `data-scrolled` is set by a single Inters
 
 ## Hero (2026-11-12)
 Server Component `sections/Hero.tsx` + `sections/hero.css` (plain CSS; values interpolated with calc()/clamp() between the 390/744/1024/1440 reference measurements — see the CSS header and D23–D29). Structure: `.hero` (full-bleed background) > `.hero__stage` (max 1440, centred) > `.hero__media` (photo, two cards, two shades; clipped) + `.hero__content` (h1, description, actions) + `<HeroBoundary />`. Only `.hero-card__float` animates. No client JS in the Hero.
+
+## Hero height/width model (correction, 2026-11-12)
+See D30–D34. `.hero` min-height = `100svh`; photo + shades are full-bleed; text column and cards are anchored to a centred 1440px canvas (`--canvas-pad`); stacked layout is a flex column whose photo band absorbs spare height; side-by-side layout shares spare height between text, cards and photo scale (`--extra-h`).
