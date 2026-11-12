@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+/*
+ * Amanix design tokens — FOUNDATION baseline.
+ *
+ * Only values observed in supplied original assets are defined here.
+ * The approved Design System (colors, spacing, radii, shadows, type ramp) is
+ * still pending (docs/DECISIONS_AND_OPEN_ITEMS.md, O02); add tokens as each
+ * slice verifies them against design-reference/ — do not guess.
+ */
+:root {
+  /* Observed in design-reference/assets/Property 1=Default.svg (logo). */
+  --amx-ink: #201f37;
+  --amx-accent: #fd4006;
+  /* Observed in Property 1=Variant3.svg (logo on dark backgrounds). */
+  --amx-on-dark: #f3f7f8;
+  --amx-surface: #ffffff;
+
+  /* Fluid page gutter / container. Provisional until spacing tokens arrive. */
+  --amx-container-max: 1440px;
+  --amx-gutter: clamp(1rem, 4vw, 5rem);
+}
+
+@theme inline {
+  --font-body: var(--font-noto-arabic), Tahoma, "Segoe UI", Arial, sans-serif;
+  --font-display: var(--font-ibm-plex-arabic), var(--font-noto-arabic), Tahoma,
+    "Segoe UI", Arial, sans-serif;
+
+  --color-ink: var(--amx-ink);
+  --color-accent: var(--amx-accent);
+  --color-on-dark: var(--amx-on-dark);
+  --color-surface: var(--amx-surface);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Arabic must not be letter-spaced: it breaks joining/shaping. */
+  :lang(ar) {
+    letter-spacing: normal;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--amx-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Centred, fluid content container using logical padding (RTL-safe). */
+  .container-page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--amx-container-max);
+    padding-inline: var(--amx-gutter);
+  }
+
+  /* Visible on keyboard focus only; positioned with logical properties. */
+  .skip-link {
+    position: absolute;
+    inset-inline-start: 1rem;
+    top: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: var(--amx-ink);
+    color: var(--amx-on-dark);
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus-visible {
+    transform: none;
+  }
+}
