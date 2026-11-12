@@ -48,3 +48,6 @@ Server Component `sections/Hero.tsx` + `sections/hero.css` (plain CSS; values in
 
 ## Hero height/width model (correction, 2026-11-12)
 See D30–D34. `.hero` min-height = `100svh`; photo + shades are full-bleed; text column and cards are anchored to a centred 1440px canvas (`--canvas-pad`); stacked layout is a flex column whose photo band absorbs spare height; side-by-side layout shares spare height between text, cards and photo scale (`--extra-h`).
+
+## Dark intro region (Phase 03A, 2026-11-13)
+`.dark-intro` (src/app/page.tsx) wraps Hero + TrustStrip and owns `<HeroBoundary />`; the header turns white only near the end of that combined region. TrustStrip is a CSS-only marquee (5 identical groups, translate by one group) with a reduced-motion fallback of one wrapped group. See T01-T06 in DECISIONS_AND_OPEN_ITEMS.md.

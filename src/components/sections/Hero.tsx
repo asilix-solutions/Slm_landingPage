@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { HeroBoundary } from "@/components/layout/HeroBoundary";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
 import { headerActions } from "@/content/navigation";
 import { heroContent } from "@/content/hero";
@@ -80,7 +79,6 @@ export function Hero() {
           </div>
         </div>
 
-        <HeroBoundary />
       </div>
     </section>
   );

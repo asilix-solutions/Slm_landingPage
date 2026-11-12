@@ -121,3 +121,24 @@ Method: production build (`next start`) in the Claude desktop Browser pane; DOM/
 - Before/after (1440×900, 390×844): white area below the Hero removed; Hero fills the viewport.
 - Fixed a faint 1px line above the bottom shade on fractional heights (photo trimmed 1px).
 - Reduced motion: CSS for the two floats is unchanged (only `no-preference`, explicit `reduce` override). Emulated reduce, Lighthouse/CLS, Safari/Firefox, real devices, iOS Safari `svh` behaviour: **NOT RUN**. Layout is static (no JS-driven sizing), photo has fixed intrinsic size, so no layout shift is expected, but it was not measured.
+
+## Phase 03A — Trust strip (2026-11-13) — production build (`next start`) in the Claude desktop Browser pane
+Method: DOM geometry vs reference SVG geometry; `scrollTo` + `data-scrolled` for the header; Web Animations API for the marquee; a temporary page (dark intro + 1500px light filler) was used for header tests and removed. Screenshots (pane-scaled): `docs/qa-screenshots/trust-strip/`.
+
+| Viewport | Hero h (fills?) | Strip h (ref) | Overflow | Header: top / mid-Hero / Hero end / mid-strip | Flip (−6 / +6 px around the boundary) | After | Back up |
+|---|---|---|---|---|---|---|---|
+| 320×640 | 797 (content) | 241 (—) | none | T T T W* | T / W | W | T |
+| 390×844 | 844 ✓ | 239 (238.7) | none | T T T W* | T / W | W | T |
+| 390×667 | 773 (content) | 239 | none | T T T W* | T / W | W | T |
+| 744×1024 | 1024 ✓ | 278 (277.9) | none | T T T W* | T / W | W | T |
+| 1024×768 | 768 ✓ | 329 (328.3) | none | T T T T | T / W | W | T |
+| 1440×900 | 900 ✓ | 431 (431) | none | T T T T | T / W | W | T |
+| 1440×560 | 680 (reference min) | 431 | none | T T T T | T / W | W | T |
+| 1920×1080 | 1080 ✓ | 431 | none | T T T T | T / W | W | T |
+
+(*) the strip is shorter than header + 80px at these widths, so the header is already white at the strip's midpoint — expected. No gap between Hero and strip (0px) at any size.
+- 1440 geometry: title 262.1px wide (ref 261.5), tiles 87×60 at 134px from the strip top, pitch 177, captions 98/58/85 (2 rows)/87/88/86px (ref 96.6/59.2/85.3/88.6/90.8/86.0). 1024/744/390: cards 96×113, 86.4×101.5, 66.9×79 exactly; pitch 125.9/113.3/87.7.
+- Marquee: animation `trust-marquee`, 30s @1440, keyframes `translate(0)` → `translateX(1062px)`; seam delta 0px; the track covers the viewport at max shift (left edge −2823px). Mid-animation screenshots at 1440/1024/390 show the cards with the edge fade and no distortion.
+- Reduced motion: **simulated** by injecting the stylesheet's `prefers-reduced-motion: reduce` rules as unconditional CSS (the pane has no media emulation): animation none, transform none, 1 group visible, wrapped/centred (1425px wide row @1440; 4+2 cards @390), no overflow. **Real emulated reduce: NOT RUN.**
+- Accessibility (DOM): 1 `<h2>`, 5 lists of which 4 `aria-hidden`, 6 exposed items, 0 images with alt text (decorative), 0 focusable elements in the strip, `direction: rtl`. Contrast (computed): heading `#9E9EA0` on `#030304` 7.6:1; captions ≈9:1 at 70% opacity. Screen-reader pass (NVDA/VoiceOver): **NOT RUN**.
+- NOT RUN: Lighthouse/CLS/LCP for the new section, Safari/Firefox (mask-image), real devices, hover-pause on touch, 375/768/1280 widths, browser zoom. Duplicated groups use lazy-loaded images (not measured).

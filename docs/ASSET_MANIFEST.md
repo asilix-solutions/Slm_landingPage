@@ -36,3 +36,18 @@ Design tokens; original Arabic copy for all sections; brand favicon/app icons; i
 | `public/images/hero/card-contractor-profile.svg` | `Outer Card Shell.svg` | Unmodified, 113 KB, 329×170 |
 | `public/brand/logo-on-dark.svg` | `Property 1=Variant2.svg` | Unmodified (orange symbol + light lettering) |
 | `public/brand/logo-on-light.svg` | `Property 1=Default.svg` | Unmodified |
+
+## Trust strip assets (Phase 03A)
+| Public path | Source (design-reference/assets/phase-03/trust-strip/logos/) | Notes |
+|---|---|---|
+| public/images/trust-strip/ul.webp | UL Listed Products.svg | lossless WebP from the embedded 210x277 PNG, 109x144 |
+| public/images/trust-strip/nfpa.webp | NFPA Member.svg | embedded raster only 58x61 (soft when scaled up) |
+| public/images/trust-strip/industrial-security.webp | Industrial Security.svg | embedded 914x998 PNG (599 KB) reduced to 132x144, 17 KB |
+| public/images/trust-strip/saso.webp | SASO Compliance.svg | 86x144 |
+| public/images/trust-strip/iso-9001.webp | ISO 9001 Certified.svg | 144x140 |
+| public/images/trust-strip/gcc-lab.webp | GCC Lab Tested.svg | 144x72 |
+
+MISSING (not supplied, not drawn): FM Approved, Civil Defense. Rights and claims for all marks are unverified — see the Phase 03A section of DECISIONS_AND_OPEN_ITEMS.md.
+
+## Dark intro region (Phase 03A, 2026-11-13)
+`.dark-intro` (src/app/page.tsx) wraps Hero + TrustStrip and owns `<HeroBoundary />`; the header turns white only near the end of that combined region. TrustStrip is a CSS-only marquee (5 identical groups, translate by one group) with a reduced-motion fallback of a single wrapped group. See T01–T06 in DECISIONS_AND_OPEN_ITEMS.md.

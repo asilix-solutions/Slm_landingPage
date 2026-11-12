@@ -356,3 +356,8 @@
     pointer-events: none;
   }
 }
+
+/* The Hero and the trust strip are one dark region; HeroBoundary is anchored to its end. */
+.dark-intro {
+  position: relative;
+}
