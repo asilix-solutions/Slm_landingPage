@@ -27,3 +27,12 @@ Inspected programmatically (SVG root size, embedded raster type/pixels, `<text>`
 
 ## Missing / requested
 Design tokens; original Arabic copy for all sections; brand favicon/app icons; icons for workflow/features; confirmation of section ownership for the three unconfirmed images; optimized photo originals (optional — extraction is possible).
+
+## Production assets created (Hero slice, 2026-11-12)
+| Public path | Source | Notes |
+|---|---|---|
+| `public/images/hero/hero-office.jpg` | PNG 1824×862 embedded in `Fire Safety Office Professional 1.svg` | Mirrored (as in all four references), JPEG q84 mozjpeg, 165 KB; `next/image` serves 26–96 KB responsive variants |
+| `public/images/hero/card-matched-candidates.svg` | `Main - MatchedTalentWidget.svg` | Unmodified, 55 KB, 283×231 |
+| `public/images/hero/card-contractor-profile.svg` | `Outer Card Shell.svg` | Unmodified, 113 KB, 329×170 |
+| `public/brand/logo-on-dark.svg` | `Property 1=Variant2.svg` | Unmodified (orange symbol + light lettering) |
+| `public/brand/logo-on-light.svg` | `Property 1=Default.svg` | Unmodified |

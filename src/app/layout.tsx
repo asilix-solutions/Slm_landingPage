@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ibmPlexSansArabic, notoSansArabic } from "@/lib/fonts";
+import { SiteHeader } from "@/components/layout/SiteHeader";
 import "./globals.css";
 
 // Baseline metadata only. Final title/description/OG copy and the production
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main-content" className="skip-link">
           تخطَّ إلى المحتوى الرئيسي
         </a>
+        <SiteHeader />
         {children}
       </body>
     </html>

@@ -1,0 +1,372 @@
+/*
+ * Hero layout — values measured from the four approved reference screens
+ * (design-reference/screens, via element geometry of the SVGs):
+ *
+ *   1440: hero 680px tall, photo fills 1440x680, text column right-aligned
+ *   1024: hero 569px, photo zoomed 120%, diagonal side shade
+ *    744: stacked — photo band 386px, text below, full-width buttons
+ *    390: stacked — photo band 400px (photo zoomed ~217%), full-width buttons
+ *
+ * Between references, offsets/sizes are interpolated linearly with
+ * calc()/clamp() on the viewport width. Above 1440 the hero "stage" stays
+ * 1440px wide and centred; its photo edges fade into the page background.
+ *
+ * Layer order (z-index): photo 0, card A 1, side shade 2, card B 3,
+ * bottom shade 4, text 5.
+ */
+
+.hero {
+  --hero-bg: #030304;
+  --hero-gutter: 1rem;
+  --hero-col: 100%;
+
+  /* stacked layout (< 1024px): photo band height + where the text starts */
+  --media-h: calc(400px - (100vw - 390px) * 0.0395);
+  --content-top: calc(var(--media-h) - 31.2px + (100vw - 390px) * 0.028);
+
+  position: relative;
+  overflow: hidden;
+  background-color: var(--hero-bg);
+  color: #fff;
+}
+
+.hero__stage {
+  position: relative;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-top: var(--content-top);
+  padding-bottom: 4rem;
+}
+
+/* ---------- media layers ---------- */
+
+.hero__media {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: var(--media-h);
+  overflow: hidden;
+  background-color: var(--hero-bg);
+}
+
+@media (min-width: 90.01rem) {
+  /* Wider than the 1440 design: dissolve the stage edges into the page. */
+  .hero__media {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+  }
+}
+
+.hero__photo {
+  position: absolute;
+  z-index: 0;
+  max-width: none;
+  height: 100%;
+  width: auto;
+  /* 390 → 744: photo shifts from -47.6px to -20.5px (mirrored image coords) */
+  left: calc(100vw * 0.0766 - 77.5px);
+  top: 0;
+}
+
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero__shade--side {
+  z-index: 2;
+  background: linear-gradient(
+    333deg,
+    rgb(3 3 4 / 0) 45%,
+    rgb(3 3 4 / 1) 89%
+  );
+}
+
+.hero__shade--bottom {
+  z-index: 4;
+  background: linear-gradient(
+    to bottom,
+    rgb(3 3 4 / 0) 62%,
+    rgb(3 3 4 / 0.8) 92%,
+    rgb(3 3 4 / 1) 100%
+  );
+}
+
+/* ---------- floating cards ---------- */
+
+.hero-card {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+.hero-card--a {
+  z-index: 1;
+  left: calc(-23.1px + (100vw - 390px) * 0.1073);
+  top: calc(110.2px + (100vw - 390px) * 0.0068);
+  width: calc(135px + (100vw - 390px) * 0.0263);
+}
+
+.hero-card--b {
+  z-index: 3;
+  left: calc(195.4px + (100vw - 390px) * 0.778);
+  top: calc(253.5px - (100vw - 390px) * 0.0695);
+  width: calc(192.2px + (100vw - 390px) * 0.0429);
+}
+
+@media (max-width: 389.98px) {
+  .hero-card--b {
+    left: 50.1vw;
+    width: 49.3vw;
+  }
+}
+
+/* Motion: only the two inner wrappers, only when motion is welcome. */
+@keyframes hero-float-a {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes hero-float-b {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-card__float {
+    will-change: transform;
+  }
+
+  .hero-card--a .hero-card__float {
+    animation: hero-float-a 7s ease-in-out infinite alternate;
+  }
+
+  .hero-card--b .hero-card__float {
+    animation: hero-float-b 8.5s ease-in-out 0.8s infinite alternate;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-card__float {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}
+
+/* ---------- text ---------- */
+
+.hero__content {
+  position: relative;
+  z-index: 5;
+  max-width: calc(var(--hero-col) + var(--hero-gutter) * 2);
+  padding-inline: var(--hero-gutter);
+}
+
+.hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* 390: 32/51 → 744: 38/52. min() keeps line one on a single row at 320. */
+  font-size: clamp(
+    26px,
+    min(calc(32px + (100vw - 390px) * 0.01695), calc((100vw - 2rem) / 10.4)),
+    38px
+  );
+  line-height: calc(51px + (100vw - 390px) * 0.00282);
+  color: #fff;
+}
+
+.hero__title-line {
+  display: block;
+}
+
+.hero__description {
+  margin: calc(20.7px + (100vw - 390px) * 0.0146) 0 0;
+  font-size: 1rem;
+  line-height: calc(24px - (100vw - 390px) * 0.00424);
+  color: #bdbdbf;
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 33px;
+}
+
+/* ---------- 744 → 1023: stacked, tablet proportions ---------- */
+
+@media (min-width: 46.5rem) {
+  .hero {
+    --hero-gutter: 2rem;
+    --media-h: 51.9vw;
+    --content-top: calc(var(--media-h) - 21.3px);
+  }
+
+  .hero__photo {
+    left: -2.75vw;
+  }
+
+  .hero__shade--side {
+    background: linear-gradient(
+      28deg,
+      rgb(3 3 4 / 0) 45%,
+      rgb(3 3 4 / 1) 89%
+    );
+  }
+
+  .hero__shade--bottom {
+    background: linear-gradient(
+      to bottom,
+      rgb(3 3 4 / 0) 62%,
+      rgb(3 3 4 / 0.8) 88.5%,
+      rgb(3 3 4 / 1) 100%
+    );
+  }
+
+  .hero-card--a {
+    left: 2vw;
+    top: 15.14vw;
+    width: 19.4vw;
+  }
+
+  .hero-card--b {
+    left: 63.3vw;
+    top: 30.78vw;
+    width: 27.9vw;
+  }
+
+  .hero__title {
+    font-size: calc(38px + (100vw - 744px) * 0.0107);
+    line-height: calc(52px + (100vw - 744px) * 0.0286);
+  }
+
+  .hero__description {
+    max-width: 496px;
+    margin-top: calc(25.85px - (100vw - 744px) * 0.0109);
+    font-size: 17px;
+    line-height: calc(22.5px + (100vw - 744px) * 0.0018);
+  }
+}
+
+/* ---------- ≥ 1024: side-by-side ---------- */
+
+@media (min-width: 64rem) {
+  .hero {
+    --hero-h: clamp(569px, calc(295.8px + 26.68vw), 760px);
+    --media-h: var(--hero-h);
+    --content-top: clamp(
+      130.4px,
+      calc(130.4px + (100vw - 1024px) * 0.0829),
+      164.9px
+    );
+    --hero-col: clamp(496px, calc(496px + (100vw - 1024px) * 0.1346), 552px);
+  }
+
+  .hero__stage {
+    height: var(--hero-h);
+    padding-bottom: 0;
+  }
+
+  .hero__media {
+    height: 100%;
+  }
+
+  .hero__photo {
+    width: calc(100% + max(0px, 1440px - 100vw) * 0.4808);
+    height: auto;
+    left: calc(max(0px, 1440px - 100vw) * -0.0745);
+    top: calc(max(0px, 1440px - 100vw) * -0.0288);
+  }
+
+  .hero__shade--side {
+    background: linear-gradient(
+      47deg,
+      rgb(3 3 4 / 0) 35%,
+      rgb(3 3 4 / 0.8) 60.8%
+    );
+  }
+
+  .hero__shade--bottom {
+    background: linear-gradient(
+      to bottom,
+      rgb(3 3 4 / 0) 62%,
+      rgb(3 3 4 / 0.8) 92%,
+      rgb(3 3 4 / 1) 100%
+    );
+  }
+
+  .hero-card--a {
+    left: clamp(39.7px, calc(41.8px - (100vw - 1024px) * 0.005), 41.8px);
+    top: clamp(142.8px, calc(142.8px + (100vw - 1024px) * 0.0409), 159.8px);
+    width: clamp(207.9px, calc(207.9px + (100vw - 1024px) * 0.1805), 283px);
+  }
+
+  .hero-card--b {
+    left: clamp(315.7px, calc(315.7px + (100vw - 1024px) * 0.3733), 471px);
+    top: clamp(400.8px, calc(400.8px + (100vw - 1024px) * 0.1183), 450px);
+    width: clamp(311.6px, calc(311.6px + (100vw - 1024px) * 0.0418), 329px);
+  }
+
+  .hero__title {
+    font-size: clamp(41px, calc(41px + (100vw - 1024px) * 0.01683), 48px);
+    line-height: clamp(60px, calc(60px + (100vw - 1024px) * 0.01442), 66px);
+  }
+
+  .hero__description {
+    max-width: none;
+    margin-top: clamp(22.8px, calc(22.8px + (100vw - 1024px) * 0.0026), 23.9px);
+    font-size: clamp(17px, calc(17px + (100vw - 1024px) * 0.0048), 19px);
+    line-height: clamp(23px, calc(23px + (100vw - 1024px) * 0.0048), 25px);
+  }
+
+  .hero__actions {
+    flex-direction: row;
+  }
+}
+
+/* ---------- ≥ 1280: desktop proportions ---------- */
+
+@media (min-width: 80rem) {
+  .hero {
+    --hero-gutter: 5rem;
+  }
+
+  .hero__shade--side {
+    background: linear-gradient(
+      to right,
+      rgb(3 3 4 / 0) 40%,
+      rgb(3 3 4 / 0.7) 92.3%
+    );
+  }
+
+
+}
