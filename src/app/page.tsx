@@ -1,5 +1,6 @@
 import { HeroBoundary } from "@/components/layout/HeroBoundary";
 import { Hero } from "@/components/sections/Hero";
+import { SafetyNeeds } from "@/components/sections/safety-needs/SafetyNeeds";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 
 /**
@@ -19,6 +20,7 @@ export default function HomePage() {
         <TrustStrip />
         <HeroBoundary />
       </div>
+      <SafetyNeeds />
     </main>
   );
 }

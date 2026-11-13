@@ -51,3 +51,11 @@ MISSING (not supplied, not drawn): FM Approved, Civil Defense. Rights and claims
 
 ## Dark intro region (Phase 03A, 2026-11-13)
 `.dark-intro` (src/app/page.tsx) wraps Hero + TrustStrip and owns `<HeroBoundary />`; the header turns white only near the end of that combined region. TrustStrip is a CSS-only marquee (5 identical groups, translate by one group) with a reduced-motion fallback of a single wrapped group. See T01–T06 in DECISIONS_AND_OPEN_ITEMS.md.
+
+## Safety needs assets (Phase 03B)
+| Public path | Source | Use |
+|---|---|---|
+| public/images/safety-needs/background-mark.svg | design-reference/assets/phase-03/safety-needs/originals/slm-logo-2.svg (the duplicate in duplicates/ is byte-identical and is not rendered) | decorative background mark, unmodified |
+| public/images/safety-needs/icon-document-search.svg | .../originals/vector-1-document-search.svg | card 8 (نماذج طلبات ديناميكية) only |
+
+MISSING: note-edit icon (cards 1-6) and shield-lock icon (card 7) — not supplied, not drawn. design-reference/assets/phase-03/safety-needs/feature-icons/ is empty.

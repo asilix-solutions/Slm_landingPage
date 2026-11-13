@@ -51,3 +51,6 @@ See D30–D34. `.hero` min-height = `100svh`; photo + shades are full-bleed; tex
 
 ## Dark intro region (Phase 03A, 2026-11-13)
 `.dark-intro` (src/app/page.tsx) wraps Hero + TrustStrip and owns `<HeroBoundary />`; the header turns white only near the end of that combined region. TrustStrip is a CSS-only marquee (5 identical groups, translate by one group) with a reduced-motion fallback of one wrapped group. See T01-T06 in DECISIONS_AND_OPEN_ITEMS.md.
+
+## Safety needs section (Phase 03B, 2026-11-13)
+sections/safety-needs/: SafetyNeeds.tsx (section + decorative mark), FeatureCard.tsx (reusable card, inert action, always-present icon slot), safety-needs.css; data in src/content/safety-needs.ts (typed, `as const satisfies`). Server Components only. See S01-S07 in DECISIONS_AND_OPEN_ITEMS.md.

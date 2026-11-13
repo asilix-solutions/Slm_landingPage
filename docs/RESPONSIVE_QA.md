@@ -142,3 +142,24 @@ Method: DOM geometry vs reference SVG geometry; `scrollTo` + `data-scrolled` for
 - Reduced motion: **simulated** by injecting the stylesheet's `prefers-reduced-motion: reduce` rules as unconditional CSS (the pane has no media emulation): animation none, transform none, 1 group visible, wrapped/centred (1425px wide row @1440; 4+2 cards @390), no overflow. **Real emulated reduce: NOT RUN.**
 - Accessibility (DOM): 1 `<h2>`, 5 lists of which 4 `aria-hidden`, 6 exposed items, 0 images with alt text (decorative), 0 focusable elements in the strip, `direction: rtl`. Contrast (computed): heading `#9E9EA0` on `#030304` 7.6:1; captions ≈9:1 at 70% opacity. Screen-reader pass (NVDA/VoiceOver): **NOT RUN**.
 - NOT RUN: Lighthouse/CLS/LCP for the new section, Safari/Firefox (mask-image), real devices, hover-pause on touch, 375/768/1280 widths, browser zoom. Duplicated groups use lazy-loaded images (not measured).
+
+## Phase 03B — Safety Needs (2026-11-13) — production build (`next start`) in the Claude desktop Browser pane
+Method: DOM geometry vs the Figma-capture measurements; screenshots (pane-scaled) in `docs/qa-screenshots/safety-needs/`; side-by-side visual comparison with `safety-needs-full-figma-capture.png`.
+
+| Viewport | Cols × rows | Section h | Card w × h | Overflow | Clipped text | Card overlap | Mark (left,top w×h) |
+|---|---|---|---|---|---|---|---|
+| 1920×1080 | 3×3 | 1516 | 400×340 | none | 0 | 0 | 0,128 607×1260 |
+| 1440×900 | 3×3 | 1516 (ref 1515.94) | 400×340 (395 with the pane's 15px scrollbar) | none | 0 | 0 | 0,128 607×1260 |
+| 1280×720 | 3×3 | 1516 | 347×340 | none | 0 | 0 | 0,128 607×1259 |
+| 1024×768 | 3×3 | 1511 | 282×349 | none | 0 | 0 | 0,128 485×1008 |
+| 768×1024 | 2×4 | 1587 | 322×317 | none | 0 | 0 | 0,120 364×756 |
+| 744×1024 | 2×4 | 1587 | 318×317 | none | 0 | 0 | 0,120 364×756 |
+| 390×844 | 1×8 | 2554 | 346×277–301 | none | 0 | 0 | 0,144 273×567 |
+| 375×667 | 1×8 | 2554 | 333×277–301 | none | 0 | 0 | same |
+| 320×640 | 1×8 | 2731 | 284×277–301 | none | 0 | 0 | same (mark no longer overlaps the heading after the top offset change) |
+
+All rows PASS for: no horizontal overflow, cards inside the viewport, no card overlap, no clipped card text, titles on one line (two lines at 1024 for some cards, no clipping), mark behind the cards and clipped by the section, no layout shift from the mark (fixed dimensions).
+- **Desktop fidelity (1440):** card rows at 250/630/1010 (ref 250/630/1010), card 340px, title box 120–152 (ref glyph 123–148), description 168–216 (ref glyphs 172–207), action box 279–307 (ref glyph 293–300), mark top 128 and last cap ≈1388 (ref ≈1381–1388). Headline 388px wide (ref 389). Visual comparison: layout, heading, card order, mark crop and layering match the capture; differences = copy accuracy risk, six empty icon slots, scrollbar-width effects.
+- **Header:** transparent over Hero + strip, white over this section (verified at 1440 and 390).
+- **Reading order / keyboard:** DOM order equals the RTL visual order (cards 1–8); the section has no focusable elements (nothing to tab to) — PASS by DOM inspection.
+- NOT RUN: screen-reader pass, Lighthouse/CLS/LCP, Safari/Firefox, real devices, browser zoom, emulated reduced motion (this section has no motion), comparison at 744/390/1024 with design references (none exist for the new version — see S02).
