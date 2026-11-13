@@ -13,9 +13,10 @@
  *   row 1: 1 2 3 · row 2: 4 5 6 · row 3: 7 8 (leaving the lower-left corner
  *   free for the decorative mark).
  *
- * Icons: only `document-search` was supplied (card 8). The "note-edit" icon
- * used by cards 1–6 and the "shield-lock" icon of card 7 were NOT supplied, so
- * those cards intentionally render an empty icon slot — do not substitute.
+ * Icons: only `document-search` was supplied. PROVISIONAL DESIGN DECISION: it is reused
+ * on all eight cards until the approved per-feature icons are delivered (the
+ * capture shows a "note-edit" icon on cards 1-6 and a "shield-lock" on card 7).
+ * Do not redraw or substitute other icons.
  *
  * The action text is visible in the capture as «تجربة المنصة» (the visual spec
  * calls it «تعرف أكثر»). No destination has been approved: it is rendered as
@@ -29,49 +30,49 @@ export const safetyNeeds = {
   cards: [
     {
       id: "tamper-proof-closing",
-      icon: null,
+      icon: "document-search",
       title: "إغلاق لا يمكن العبث به",
       description:
         "قائمة فحص، توقيعان، هامش نهائي مختوم، وأرشفة تجعل الشروع للقراءة فقط إلى الأبد.",
     },
     {
       id: "sequential-invoicing",
-      icon: null,
+      icon: "document-search",
       title: "فوترة ضريبية متسلسلة",
       description:
         "فواتير بسلسلة تجزئة ورمز QR وفق متطلبات هيئة الزكاة والضريبة والجمارك.",
     },
     {
       id: "self-running-maintenance",
-      icon: null,
+      icon: "document-search",
       title: "عقود صيانة ذاتية التشغيل",
       description:
         "جدولة الزيارات الدورية وإنشاء أوامر العمل تلقائيًا ورصد الزيارات الفائتة.",
     },
     {
       id: "engineering-review",
-      icon: null,
+      icon: "document-search",
       title: "مراجعة هندسية SBC 801",
       description:
         "قرار المهندس الاستشاري موثّق: فئة الخطورة، كثافة الرشاشات، ضغط المضخات والتهوية.",
     },
     {
       id: "controlled-margin-pricing",
-      icon: null,
+      icon: "document-search",
       title: "تسعير بهامش محكوم",
       description:
         "الضريبة والإجماليات تُحسب على الخادم، والهامش تحت الحد الأدنى يتطلب مبرّرًا مسجّلًا.",
     },
     {
       id: "documented-field-execution",
-      icon: null,
+      icon: "document-search",
       title: "تنفيذ ميداني موثّق",
       description:
         "هيكل أعمال تفصيلي، وصور تُتحقق من موقعها وتوقيتها تلقائيًا مقابل موقع المنشأة.",
     },
     {
       id: "branded-portal",
-      icon: null,
+      icon: "document-search",
       title: "بوابة بعلامتك التجارية",
       description:
         "نطاق فرعي خاص، شعارك وألوانك، وموقع تعريفي لعملائك مع إعدادات SEO كاملة.",
