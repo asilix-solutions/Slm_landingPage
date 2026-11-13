@@ -163,3 +163,39 @@ All rows PASS for: no horizontal overflow, cards inside the viewport, no card ov
 - **Header:** transparent over Hero + strip, white over this section (verified at 1440 and 390).
 - **Reading order / keyboard:** DOM order equals the RTL visual order (cards 1–8); the section has no focusable elements (nothing to tab to) — PASS by DOM inspection.
 - NOT RUN: screen-reader pass, Lighthouse/CLS/LCP, Safari/Firefox, real devices, browser zoom, emulated reduced motion (this section has no motion), comparison at 744/390/1024 with design references (none exist for the new version — see S02).
+
+## Phase 03C — solutions carousel (2026-11-13) — production build (`next start`) in the Claude desktop Browser pane
+Method: DOM geometry vs reference measurements; Web API checks; a throw-away page with 8 cards (3 real + 5 dummy) to exercise overflow/scrolling (deleted). Screenshots (pane-scaled): `docs/qa-screenshots/solutions-carousel/` (both are the 8-card simulation, labelled as such).
+
+| Viewport | Doc overflow | Card w×h | Gap | Full + partial cards (8-card test) | Result |
+|---|---|---|---|---|---|
+| 1920×1080 | none | 405×273 | 32 | 3 + 1 | PASS |
+| 1440×900 | none | 405×273 | 32 | 3 + 1 | PASS (3 real cards: section 827px, ref 826.78) |
+| 1280×720 | none | 405×273 | 28 | 2 + 1 | PASS |
+| 1024×768 | none | 405×273 | 23 | 2 + 1 | PASS |
+| 768×1024 | none | 405×273 | 17 | 1 + 1 | PASS |
+| 744×1024 | none | 405×273 | 16 | 1 + 1 | PASS |
+| 390×844 | none | 304×205 | 16 | 1 + 1 | PASS |
+| 375×667 | none | 293×197 | 16 | 1 + 1 | PASS |
+| 320×640 | none | 260×175 | 16 | 1 + 1 (heading wraps clear of the buttons) | PASS |
+
+- **Interaction (1440, 8 cards):** next button → scrollLeft −437 (card 405 + gap 32), second click −873, previous back to −437, end −2196 with the next button disabled, start 0 with previous disabled; the thumb moves from the right end to the left end (thumb left 816 → 0, width constant 529); items snap to the start edge. Keyboard: scroller focusable (`tabindex=0`, role region); 8× ArrowLeft moved it to the next snap point (−437). Direction is RTL (first card at the right).
+- **Real data (3 cards):** 1440 and 1920 fit without overflow (buttons hidden at 1920; at 1440 the pane's 15px scrollbar makes it overflow by ≈14px so buttons show); ≤1024 overflow with a peeking third card.
+- **Header:** `data-scrolled` is `true` over this section (checked once the pane rendered); header text/logo contrast on the light section was verified visually earlier for the white state. The pane frequently reports `visibilityState: hidden`, which freezes IntersectionObserver/transition rendering — screenshots taken then show a stale transparent header (not a defect).
+- NOT RUN: touch swipe on a real device, mouse-drag (not implemented), screen-reader pass, emulated reduced motion (code path inspected only), Lighthouse/CLS (cards have fixed aspect ratios, no images yet), Safari/Firefox (`scroll-snap` + hidden scrollbar), browser zoom, comparison with real photos (not supplied).
+
+## Corrections QA (2026-11-13) — production build in the Browser pane (pane often `visibilityState: hidden`, which stalls smooth scrolling and rAF-driven thumb updates; steps were therefore also checked on the `behavior:"auto"` path)
+| Viewport | Doc overflow | Scroller scrollW / clientW | Overflow px | Thumb ratio (expected) | Cards fully visible at start | Last card right gap at end | Safety icons |
+|---|---|---|---|---|---|---|---|
+| 1920×1080 | none | 2779 / 1905 | 874 | 0.685 (0.685) | 3 | 328 (canvas edge) | 8/8 same, 55×55 |
+| 1440×900 | none | 2298 / 1425 | 873 | 0.62 (0.62) | 3 | 95 | 8/8 same |
+| 1024×768 | none | 1864 / 1009 | 855 | 0.541 (0.541) | 2 | 72 | 8/8 same |
+| 744×1024 | none | 1587 / 744 | 843 | 0.469 (0.469) | 1 | 42 | 8/8 same |
+| 390×844 | none | 1030 / 390 | 640 | 0.379 (0.379) | 1 | 22 | 8/8 same |
+- **Controls (1920, visible pane, smooth):** start sl 0 (prev disabled) → next −437 → next −874 (next disabled) with the thumb 501 → 250 → 0. **1440 (auto path):** 0 → −437 → −873 (end, next disabled; a further click stays) → prev −437, thumb 255. 390: 0 → −320 → −640 → back −320. RTL confirmed (`direction: rtl`, first card on the right, scrollLeft negative).
+- **Reduced motion:** the `no-preference` query was stubbed to false: buttons scrolled with `behavior:"auto"` (verified at 744 and 1440). Real OS-level emulation: NOT RUN.
+- Safety Needs: all 8 cards render `/images/safety-needs/icon-document-search.svg`, loaded; the section has no horizontal overflow.
+- NOT RUN: touch swipe on device, screen reader, Safari/Firefox, Lighthouse.
+
+## Final carousel UX correction QA (2026-11-13)
+See C11-C14 in DECISIONS_AND_OPEN_ITEMS.md for the measured table (1440/1920 inset 1056px viewport, range 222/223, last card flush; 1024/744/390 full-bleed with natural overflow 366/587/598). Screenshot: docs/qa-screenshots/solutions-carousel/interim-3-cards-inset-viewport-1440x900.jpg. Reduced-motion path checked by stubbing the no-preference query (buttons use behavior:auto); real OS emulation, touch on device, screen reader, Safari/Firefox, Lighthouse: NOT RUN.

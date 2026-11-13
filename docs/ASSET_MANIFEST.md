@@ -59,3 +59,9 @@ MISSING (not supplied, not drawn): FM Approved, Civil Defense. Rights and claims
 | public/images/safety-needs/icon-document-search.svg | .../originals/vector-1-document-search.svg | card 8 (نماذج طلبات ديناميكية) only |
 
 MISSING: note-edit icon (cards 1-6) and shield-lock icon (card 7) — not supplied, not drawn. design-reference/assets/phase-03/safety-needs/feature-icons/ is empty.
+
+## Solutions carousel assets (Phase 03C)
+No images were supplied (design-reference/assets/phase-03/solutions-carousel/ holds only README_ASSETS.md). Nothing was cropped from the Figma screenshot or sourced elsewhere. public/images/solutions-carousel/ is intentionally not created yet.
+
+## Solutions carousel (Phase 03C, 2026-11-13)
+sections/solutions/: SolutionsCarousel.tsx (server, native scroll-snap scroller), SolutionCard.tsx (server), SolutionsCarouselControls.tsx (client: buttons + progress mirror), solutions.css; data in src/content/solutions.ts. See C01-C07 in DECISIONS_AND_OPEN_ITEMS.md.

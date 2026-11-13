@@ -1,0 +1,228 @@
+/*
+ * «حلول سلم تدعمك» — measured from the Figma reference
+ * (design-reference/notes/phase-03/solutions-carousel/figma-section-reference-1440.png,
+ * 1440 × 826.78 frame, capture scale ≈ 0.7125):
+ *
+ *   background #F5F5F7; heading glyph top ≈ 170px, right edge on the 80px gutter
+ *   progress bar: y ≈ 290, ~10px tall, #F0F0F0 track with a #D7D7D7 thumb,
+ *                 running from the page's left edge to the right gutter
+ *   cards: 405 × 273 (≈ 3:2), gap 32, radius ≈ 16, first card on the right
+ *          edge (RTL start), next card cut off by the viewport's left edge
+ *   captions: ~32px under the card, right-aligned with it
+ *   frame height 826.78 (reference only — not a fixed height here)
+ *
+ * The reference implies more than three cards (a fourth is partly visible);
+ * only three are known, so the overflow state can only be fully seen with more
+ * data. See src/content/solutions.ts.
+ */
+
+.solutions {
+  --sol-bg: #f5f5f7;
+  --sol-ink: #2e3338;
+  --sol-gutter: clamp(1rem, 5.6vw, 5rem);
+  /* start/end inset: the gutter, or the margin that centres a 1280px column */
+  --sol-edge: max(var(--sol-gutter), calc((100% - 1280px) / 2));
+  --sol-card-w: clamp(260px, 78vw, 405px);
+  --sol-gap: clamp(16px, 2.2vw, 32px);
+  /* desktop viewport: 2 cards + 2 gaps + 0.45 of the third (the next card peeks) */
+  --sol-view: calc(var(--sol-card-w) * 2.45 + var(--sol-gap) * 2);
+  --sol-pt: 72px;
+  --sol-pb: 88px;
+
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--sol-pt) var(--sol-pb);
+  background-color: var(--sol-bg);
+  color: var(--sol-ink);
+}
+
+.solutions__title {
+  margin: 0 0 24px;
+  padding-inline: var(--sol-edge);
+  /* phones: keep clear of the 2 buttons (2 x 44px + 8px gap + 8px) so a long heading wraps */
+  padding-inline-end: calc(var(--sol-edge) + 112px);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ---------- progress + buttons (client component) ---------- */
+
+.solutions__progress {
+  position: relative;
+  height: 10px;
+  margin: 0 0 16px;
+  margin-inline-start: var(--sol-edge); /* right gutter; bleeds to the left edge */
+  background-color: #f0f0f0;
+}
+
+.solutions__progress-thumb {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--vis, 1) * 100%);
+  min-width: 24px;
+  /* inline-start = right in RTL: thumb starts at the right, as in the reference */
+  inset-inline-start: calc((1 - var(--vis, 1)) * var(--p, 0) * 100%);
+  background-color: #d7d7d7;
+}
+
+.solutions__buttons {
+  position: absolute;
+  top: var(--sol-pt);
+  inset-inline-end: var(--sol-edge); /* left side, opposite the heading */
+  display: flex;
+  gap: 8px;
+}
+
+.solutions__buttons[hidden] {
+  display: none;
+}
+
+.solutions__button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d7d7d7;
+  border-radius: 50%;
+  background-color: #fff;
+  color: var(--sol-ink);
+  cursor: pointer;
+}
+
+.solutions__button:hover:not(:disabled) {
+  background-color: #ececef;
+}
+
+.solutions__button:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+/* ---------- scroller ---------- */
+
+.solutions__scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--sol-edge);
+  scrollbar-width: none; /* the progress bar replaces the native scrollbar */
+}
+
+.solutions__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.solutions__scroller:focus-visible {
+  outline-offset: -4px;
+}
+
+.solutions__track {
+  display: flex;
+  gap: var(--sol-gap);
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 0 var(--sol-edge);
+  list-style: none;
+}
+
+.solution-card {
+  flex: none;
+  width: var(--sol-card-w);
+  scroll-snap-align: start;
+}
+
+.solution-card__media {
+  position: relative;
+  aspect-ratio: 405 / 273;
+  overflow: hidden;
+  border-radius: 16px;
+  /* Neutral stand-in until the approved originals arrive — not artwork. */
+  background-color: #e4e4e8;
+}
+
+.solution-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.solution-card__title {
+  margin: 24px 0 0;
+  padding-inline-end: 6px;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--sol-ink);
+}
+
+/* ---------- ≥ 744 ---------- */
+
+@media (min-width: 46.5rem) {
+  .solutions {
+    --sol-pt: 96px;
+    --sol-pb: 112px;
+  }
+
+  .solutions__title {
+    margin-bottom: 40px;
+    font-size: 2rem;
+  }
+
+  .solution-card__title {
+    margin-top: 28px;
+    font-size: 1.25rem;
+  }
+}
+
+/* ---------- ≥ 1280: reference proportions ---------- */
+
+@media (min-width: 80rem) {
+  /* Real overflow, no spacer: the scroller is inset to ~2.45 cards starting at the
+     right gutter (RTL start); the remaining card(s) scroll into view and the last
+     card ends flush with the viewport edge. */
+  .solutions__scroller {
+    width: var(--sol-view);
+    margin-inline-start: var(--sol-edge);
+    scroll-padding-inline: 0;
+  }
+
+  .solutions__track {
+    padding-inline: 0;
+  }
+
+  .solutions__progress {
+    width: var(--sol-view);
+  }
+
+  .solutions__buttons {
+    inset-inline-end: calc(100% - var(--sol-edge) - var(--sol-view));
+  }
+  .solutions {
+    --sol-pt: 161px; /* heading glyph top at ~170px */
+    --sol-pb: 176px; /* frame height ~827px with three-line-free captions */
+  }
+
+  .solutions__title {
+    margin-bottom: 73px; /* progress bar at ~290px */
+    font-size: 2.5rem; /* fitted: reference heading is ~288px wide */
+    font-weight: 500;
+  }
+
+  .solution-card__title {
+    margin-top: 26px;
+    font-size: 1.5rem; /* fitted: reference caption ~217px wide */
+  }
+}
+
+/* Reduced motion: no animated scrolling anywhere in this section. */
+@media (prefers-reduced-motion: reduce) {
+  .solutions__scroller {
+    scroll-behavior: auto;
+  }
+}
