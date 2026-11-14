@@ -57,3 +57,9 @@ sections/safety-needs/: SafetyNeeds.tsx (section + decorative mark), FeatureCard
 
 ## Project Control scrollytelling
 Server component ProjectControl renders heading + story panels from src/content/project-control.ts; the only client leaf is ProjectControlSteps (one IntersectionObserver, aria-current, no live region). Sticky is plain CSS on .pc__aside. Add a panel by giving a step a panel object.
+
+## Metrics band (Phase 05A)
+Server component src/components/sections/metrics/MetricsBand.tsx + metrics.css, content in src/content/metrics.ts (unverified claims). Placed after ProjectControl. Full-bleed background with the shared 1280px content column; background is optional local media (existsSync at build, CSS gradient fallback). FAQ (Phase 05B) not implemented.
+
+### Metrics pinned layer (Phase 05A refinement)
+metrics.css: static mode by default; `@media (min-width:21.25rem) and (min-height:30rem) and (prefers-reduced-motion:no-preference)` switches the section to a one-cell grid where `.metrics__pin` is sticky and `.metrics__inner` provides the height (H + runway). Do not add `overflow: hidden/auto` to the section or any ancestor (would break sticky).

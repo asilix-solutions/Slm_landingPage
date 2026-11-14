@@ -72,3 +72,5 @@ Production: public/images/solutions-carousel/{01,02,03,05}-*.webp (810x546, from
 NOTE (2026-11-14): the carousel photos listed above are local-only and git-ignored; see docs/SOLUTIONS_LOCAL_IMAGES.md.
 
 - public/images/project-control/request-intake.webp — 1470x792, 67 KB, LOCAL ONLY (git-ignored, rights unverified); cropped from the supplied SVG in design-reference/assets/project-control/ (also git-ignored, preserved). Not referenced by tracked content: panel 1 renders a placeholder. See docs/PROJECT_CONTROL_LOCAL_IMAGE.md.
+
+- Phase 05 (handoff 2026-11-14, see docs/PHASE05_ASSET_MANIFEST.json): metrics-background-local-preview.webp (1440x474, 26 KB) copied to public/images/metrics/metrics-background.webp — LOCAL ONLY, git-ignored, rights unverified, source SVG kept. faq-layout-reference.svg and the two Figma PNG notes are reference only (PNGs git-ignored); fullpage-end-of-body-reference.svg (13 MB) stays ignored under design-reference/screens/.

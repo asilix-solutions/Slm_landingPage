@@ -1,6 +1,7 @@
 import { HeroBoundary } from "@/components/layout/HeroBoundary";
 import { Hero } from "@/components/sections/Hero";
 import { SolutionsCarousel } from "@/components/sections/solutions/SolutionsCarousel";
+import { MetricsBand } from "@/components/sections/metrics/MetricsBand";
 import { ProjectControl } from "@/components/sections/project-control/ProjectControl";
 import { SafetyNeeds } from "@/components/sections/safety-needs/SafetyNeeds";
 import { TrustStrip } from "@/components/sections/TrustStrip";
@@ -25,6 +26,7 @@ export default function HomePage() {
       <SafetyNeeds />
       <SolutionsCarousel />
       <ProjectControl />
+      <MetricsBand />
     </main>
   );
 }

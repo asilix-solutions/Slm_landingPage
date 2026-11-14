@@ -59,3 +59,11 @@ next-env.d.ts
 # Kept LOCAL only — see docs/PROJECT_CONTROL_LOCAL_IMAGE.md.
 /public/images/project-control/
 /design-reference/assets/project-control/
+
+# Phase 05 handoff: metrics background has unverified usage rights; full-page/overview exports are local context only.
+/design-reference/assets/phase-05/metrics/
+/design-reference/notes/phase-05/*.png
+/public/images/metrics/
+# Phase 05A pinned-media handoff: reference video / previews and extra source media stay local.
+/design-reference/notes/phase-05/*.jpg
+/design-reference/notes/phase-05/reference-video/
