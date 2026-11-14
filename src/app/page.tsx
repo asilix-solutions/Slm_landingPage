@@ -1,6 +1,7 @@
 import { HeroBoundary } from "@/components/layout/HeroBoundary";
 import { Hero } from "@/components/sections/Hero";
 import { Faq } from "@/components/sections/faq/Faq";
+import { PricingPlans } from "@/components/sections/pricing/PricingPlans";
 import { SolutionsCarousel } from "@/components/sections/solutions/SolutionsCarousel";
 import { MetricsBand } from "@/components/sections/metrics/MetricsBand";
 import { ProjectControl } from "@/components/sections/project-control/ProjectControl";
@@ -29,6 +30,7 @@ export default function HomePage() {
       <ProjectControl />
       <MetricsBand />
       <Faq />
+      <PricingPlans />
     </main>
   );
 }

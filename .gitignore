@@ -67,3 +67,8 @@ next-env.d.ts
 # Phase 05A pinned-media handoff: reference video / previews and extra source media stay local.
 /design-reference/notes/phase-05/*.jpg
 /design-reference/notes/phase-05/reference-video/
+
+# Phase 06 pricing handoff: wave artwork / reference exports have unverified distribution rights; kept LOCAL only.
+/public/images/pricing/
+/design-reference/assets/phase-06/
+/design-reference/notes/phase-06/

@@ -1,0 +1,267 @@
+/*
+ * Pricing plans — measured from the Figma export (design-reference/assets/phase-06/pricing/
+ * original-exports/pricing-section-full-1440x931.svg, 1440 x 931):
+ *
+ *   white field; heading glyphs centred ~y135, subtitle ~y195, cards top y272
+ *   cards 295 x ~490 (border 1px #E0E6EB, radius 16, fill white @ 90%), x 84/411/738/1065 (gap 32)
+ *   padding 24 (+1 border): name 20/28, description 14 (2-line slot), price 24 bold, divider,
+ *   features 14 with ~33px pitch, CTA 47-48px high (radius 8, #FF2613) pinned to the bottom
+ *   comparison label ~32px under the cards; section bottom padding ~112
+ *   wave: 1440 x 756 artwork at y = 93, behind the cards
+ *
+ * Desktop reference values only: cards grow with their text, the grid collapses to 2 and 1 columns.
+ */
+
+.pricing {
+  --pricing-bg: #fff;
+  --pricing-ink: #201f37;
+  --pricing-text: #4b5056;
+  --pricing-muted: #6b7078;
+  --pricing-price: #4a4458;
+  --pricing-border: #e0e6eb;
+  --pricing-red: #ff2613;
+  --pricing-gutter: clamp(1rem, 5.6vw, 5rem);
+  --pricing-gap: 16px;
+  --pricing-pt: 64px;
+  --pricing-pb: 72px;
+
+  position: relative;
+  isolation: isolate;
+  overflow: clip; /* the 1440px wave can never create horizontal scroll */
+  padding: var(--pricing-pt) var(--pricing-gutter) var(--pricing-pb);
+  background-color: var(--pricing-bg);
+  color: var(--pricing-ink);
+}
+
+/* ---------- decorative wave (one asset, native size, centred, behind everything) ---------- */
+
+.pricing__wave {
+  position: absolute;
+  z-index: 0;
+  top: 93px;
+  left: 50%; /* physical: the artwork is centred on the page regardless of direction */
+  width: 1440px;
+  height: 756px;
+  margin-left: -720px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pricing__wave img {
+  display: block;
+  width: 1440px;
+  height: 756px;
+  max-width: none;
+}
+
+/* Wider than the 1440 artwork: fade its two cut edges instead of stretching it. */
+@media (min-width: 90.0625rem) {
+  .pricing__wave {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+.pricing__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.pricing__title {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.625rem, 1.1rem + 1.7vw, 2.25rem); /* 36px at 1440: glyph width ~405px as in the design */
+  font-weight: 700;
+  line-height: 1.3333;
+  text-wrap: balance;
+}
+
+.pricing__subtitle {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--pricing-text);
+}
+
+/* ---------- cards ---------- */
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--pricing-gap);
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan-slot {
+  display: flex;
+}
+
+.plan {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--pricing-border);
+  border-radius: 16px;
+  background-color: rgb(255 255 255 / 0.9);
+}
+
+.plan__badge {
+  position: absolute;
+  top: -1px;
+  left: -1px; /* physical: top-left corner of the card in the design */
+  padding: 6px 16px;
+  border-radius: 16px 0 16px 0;
+  background: linear-gradient(to bottom left, #ffaea7, #ffc2bd);
+  color: var(--pricing-ink);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.plan__name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--pricing-ink);
+}
+
+.plan__desc {
+  margin: 8px 0 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--pricing-text);
+}
+
+.plan__price {
+  margin: 12px 0 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--pricing-border);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+  color: var(--pricing-price);
+}
+
+.plan__unit {
+  font-weight: 700;
+}
+
+.plan__period {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--pricing-muted);
+}
+
+.plan__features {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin: 20px 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.plan__feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* text at the RTL start, check at the far end (as in the design) */
+  gap: 12px;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  color: var(--pricing-text);
+}
+
+.plan__check {
+  flex: none;
+  color: var(--pricing-text);
+}
+
+/* Presentation only: no cursor, hover, focus or role. */
+.plan__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 47px;
+  margin: auto 0 0;
+  border: 1px solid var(--pricing-red);
+  border-radius: 8px;
+  color: var(--pricing-red);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.plan[data-featured="true"] .plan__cta {
+  height: 48px;
+  background-color: var(--pricing-red);
+  color: #fff;
+}
+
+.plan__arrow {
+  flex: none;
+}
+
+.pricing__compare {
+  margin: 32px 0 0;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--pricing-ink);
+}
+
+/* ---------- breakpoints ---------- */
+
+@media (min-width: 48rem) {
+  .pricing {
+    --pricing-pt: 88px;
+    --pricing-pb: 96px;
+    --pricing-gap: 24px;
+  }
+
+  .pricing__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 48px;
+  }
+}
+
+@media (min-width: 75rem) {
+  .pricing__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Two-line description slot so prices align across cards, as in the design. */
+  .plan__desc {
+    min-block-size: calc(2 * 1.65em);
+  }
+
+  .plan {
+    min-block-size: 490px;
+  }
+}
+
+@media (min-width: 80rem) {
+  .pricing {
+    --pricing-pt: 112px;
+    --pricing-pb: 112px;
+    --pricing-gap: 32px;
+  }
+
+  .pricing__subtitle {
+    margin-top: 24px;
+  }
+
+  .pricing__grid {
+    margin-top: 64px;
+  }
+}
