@@ -23,13 +23,17 @@ export function Hero() {
     <section id="hero" aria-labelledby="hero-title" className="hero">
       <div className="hero__stage">
         <div className="hero__media" aria-hidden="true">
-          {/* Mirrored in the approved reference; the flip is baked into the file. */}
+          {/* Mirrored in the approved reference; the flip is baked into the file.
+              hero-office.webp is a single-generation WebP q93 encoded from the lossless 1824x862 PNG
+              embedded in the design export (docs/ASSET_MANIFEST.md). It is served as is: the default
+              optimizer would re-encode it at q75 (a second lossy pass, ~4.7 dB worse) and cannot add
+              resolution beyond the 1824px source anyway. */}
           <Image
-            src="/images/hero/hero-office.jpg"
+            src="/images/hero/hero-office.webp"
             alt=""
             width={1824}
             height={862}
-            sizes="(min-width: 1440px) 135vw, (min-width: 1024px) 125vw, (min-width: 744px) 112vw, 220vw"
+            unoptimized
             loading="eager"
             fetchPriority="high"
             className="hero__photo"

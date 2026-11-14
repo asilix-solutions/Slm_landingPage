@@ -87,3 +87,10 @@ Merged from `Amanix_Phase08_Footer_Handoff_2026-11-14.zip` (integrity OK, no uns
 - `public/images/footer/footer-decorative-slm.svg` (209x423), `social-{facebook,linkedin,x,youtube,instagram}.svg` (24x24)
 - References (not served): `design-reference/assets/phase-08/`, `design-reference/notes/phase-08/`
 All vector, served `unoptimized` (never rasterised). Social glyphs are third-party marks used decoratively; no rights review recorded.
+
+## Phase 09A — Hero photo re-encode
+- Highest-quality original: the PNG 1824x862 (1.7 MB, lossless, carries embedded C2PA/content-credentials metadata) inside `design-reference/assets/inbox/Fire Safety Office Professional 1.svg`. The SVG wraps only that one raster, so **1824x862 is the maximum real resolution available**.
+- Previous chain: PNG -> mirrored JPEG q84 (`hero-office.jpg`, 161 KB, 43.8 dB vs the PNG) -> `next/image` default optimizer WebP **q75, 57 KB, 39.1 dB** (every requested width >=1824 returned the same 1824x862 file). The second lossy pass was the weakest link.
+- New: `public/images/hero/hero-office.webp` = mirrored PNG -> WebP q93 method 6, **142 KB, 44.2 dB**, edge-energy 289 vs 288 in the source (no sharpening). Served with `unoptimized` (no re-encode). Comparison: q92 126 KB/43.7 dB, q94 159 KB/44.4, lossless 1.2 MB, AVIF q85 109 KB/44.0 dB but softer (edge-energy 280), double-lossy JPEG->WebP q90 41.5 dB.
+- `hero-office.jpg` is now unreferenced (kept, not deleted; remove in a later cleanup if approved). Tracked in git like the old file, so fresh clones have no broken reference.
+- Remaining limit: at 1920x1080 the cover scale is ~1.25x the source (2.5x at DPR 2), and at 1440x900 ~1.04x (2.1x at DPR 2), so large/Retina screens still upscale. Real fix needs an approved original of at least 2880x1360 (1440 @2x), ideally 3840x1815.

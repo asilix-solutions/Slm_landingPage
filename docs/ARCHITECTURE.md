@@ -80,3 +80,6 @@ Server component src/components/sections/qna/QnaCenter.tsx + qna.css, content in
 - Two layout levels: a full-width white shell (margin 12px <48rem, 16px <64rem, 24px >=64rem) and a dark `#181818` radius-8 card (`overflow:hidden`) with a centred inner lane (max 1232px). The card is NOT inside the 1280px container.
 - >=90rem uses the exact reference grid (312px logo track, 312px column pitch); 64-90rem is fluid; below 64rem the card grows with its content and the decoration is hidden.
 - No destinations are approved: all footer items are plain text (no `<a>`), social icons are `aria-hidden`.
+
+## Phase 09A — Hero image delivery
+The Hero photo is a single pre-encoded WebP served `unoptimized` (see ASSET_MANIFEST). Reason: the default `next/image` optimizer only offers q75 (Next 16 `images.qualities` default `[75]`) and cannot exceed the 1824px source, so it only added a lossy pass. The `sizes` prop and the optimizer preload link were removed; the `<img>` keeps `loading="eager"` + `fetchPriority="high"` and is discovered directly from the HTML.

@@ -310,3 +310,8 @@ Root causes of the two defects:
 - No destinations: services, pricing (header #pricing/#services placeholders point at ids not in the page), resources, company, legal, accessibility, and all five social profiles. All render as non-link text; social icons are aria-hidden until URLs exist.
 - Copyright owner/year (2026) unconfirmed; footer copy is transcribed, not approved.
 - Footer is in `layout.tsx` (site-wide), outside `<main>`.
+
+## Phase 09A — Hydration report and Hero source
+- Hydration mismatch at `QnaCenter.tsx` `.qna__media`: **most likely external DOM mutation (image-overlay browser extension, unconfirmed)**. Evidence: the styles belong to no source file, the SSR HTML never contains the div, and clean production/dev sessions show no error. The attributes (absolute, top/left offset, z-index 1000, pointer cursor) match save/search-by-image hover buttons that extensions append beside `<img>`. Not reproduced by simulated injection (React 19.3 tolerated it), so the exact extension is unproven. No application code changed for this. Remedy to confirm: reload in a Guest/Incognito window or with extensions disabled; if the error vanishes, disable the extension for localhost. If it persists in a clean profile, send the full dev-overlay diff.
+- Hero source limit: a higher-resolution original (>= 2880x1360, ideally 3840x1815) is required for visibly sharper 1440+/Retina rendering; owner to supply.
+- `hero-office.jpg` superseded by `hero-office.webp`; approve deletion.
