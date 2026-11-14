@@ -54,3 +54,8 @@ next-env.d.ts
 /design-reference/notes/phase-03/solutions-carousel/four-unique-assets-contact-sheet.jpg
 /design-reference/notes/phase-03/solutions-carousel/solutions-figma-capture-20261113.png
 /docs/qa-screenshots/solutions-carousel/with-images-*.jpg
+
+# Phase 04 project-control photo: third-party / unverified usage rights, public repository.
+# Kept LOCAL only — see docs/PROJECT_CONTROL_LOCAL_IMAGE.md.
+/public/images/project-control/
+/design-reference/assets/project-control/

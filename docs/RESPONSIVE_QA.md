@@ -208,3 +208,18 @@ See A01-A05 in DECISIONS_AND_OPEN_ITEMS.md: Safety Needs vs Solutions boundaries
 
 ## Repeated-cards QA (2026-11-14)
 See R01-R03 in DECISIONS_AND_OPEN_ITEMS.md: 6 cards (3 repeated, aria-hidden), real overflow at 1920/1440/1024/744/390 (ranges 1310/1323/1649/1851/1559), last card fully visible at the end, thumb equals clientW/scrollW, keyboard and buttons verified, no document overflow.
+
+## Project Control section (Phase 04)
+
+- Grid edges align with Safety Needs at all tested widths (0px delta); no horizontal overflow measured by DOM.
+- Sticky list verified with 8 dummy panels (temporary route, removed): sticks at header+24px, active item follows panels up/down, releases at section end.
+- Header flip re-verified at 1440 after tall-marker fix: jump down -> scrolled, jump up -> transparent.
+- Reduced motion: transitions removed in CSS (inspected); OS-level emulation NOT RUN.
+- Start/middle/end screenshots: NOT RUN (browser pane too small/hidden).
+- lint PASS, tsc PASS, build PASS.
+
+### Header regression after tall HeroBoundary marker (Phase 04 review, production build, Claude browser pane)
+Widths 390/744/1024/1440/1920: header transparent at top and inside the dark Hero+Trust region, white after leaving it (flip within ~15-25px of the computed threshold darkBottom - header - 80px; stepwise scroll in 97px increments), restored on upward scroll, exactly one flip each way (no flicker), direct instant jumps (into dark, past it, far below, back) all correct, no horizontal overflow. 1440: End key and Home key and a #pc-panel hash jump correct (panel clears the 89px header). 390: mobile menu opens white and closes back to the correct state both at top and when scrolled. NOT RUN: visual screenshots/pixel check of the transition, real touch fling, other browsers.
+
+### Project Control as committed (one real panel)
+Panel 1 renders a decorative placeholder (aria-hidden, 0 broken images) with real caption/CTA text; list has 1 link + 7 plain-text items. Sticky/active/release were verified earlier with temporary dummy panels only, not with production content. NOT RUN: reduced-motion OS emulation, screen reader pass, screenshots.

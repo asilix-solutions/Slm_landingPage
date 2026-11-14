@@ -70,3 +70,5 @@ sections/solutions/: SolutionsCarousel.tsx (server, native scroll-snap scroller)
 Production: public/images/solutions-carousel/{01,02,03,05}-*.webp (810x546, from the supplied SVG exports, unmodified art). Sources: design-reference/assets/phase-03/solutions-carousel/source-exports/ (4 unique SVGs; the two byte-identical DUPLICATE exports were not copied). 05-fire-extinguisher-gauge is unused. Third-party branding (SAFEQUEST) visible in 02 — rights unverified.
 
 NOTE (2026-11-14): the carousel photos listed above are local-only and git-ignored; see docs/SOLUTIONS_LOCAL_IMAGES.md.
+
+- public/images/project-control/request-intake.webp — 1470x792, 67 KB, LOCAL ONLY (git-ignored, rights unverified); cropped from the supplied SVG in design-reference/assets/project-control/ (also git-ignored, preserved). Not referenced by tracked content: panel 1 renders a placeholder. See docs/PROJECT_CONTROL_LOCAL_IMAGE.md.

@@ -217,3 +217,13 @@ Root causes of the two defects:
 ## Solutions images — licensing decision (2026-11-14) — SUPERSEDES the "images integrated" state of I04–I06 for the committed tree
 - R04: Owner decision: no unverified third-party photographs or their SVG wrappers may be committed to this public repository. The photos/SVGs/contact sheet/Figma capture/with-images screenshot are **git-ignored and kept locally**; committed `solutions.ts` has `image: null` for all items, so a fresh clone renders neutral accessible placeholders (the six-card layout, shared grid, RTL scrolling, controls and progress are unchanged). Restore steps and the exact mapping: `docs/SOLUTIONS_LOCAL_IMAGES.md`.
 - R05 (licensing blockers): rights for all four photos are unverified; image 02 shows SAFEQUEST branding; `figma-section-reference-1440.png` was already committed in `46493fd` and contains low-resolution versions of three photos (removal needs a history rewrite — repository-owner decision). The I-section measurements (810×546 images, ratios, requests) were taken with the local images present and are not reproducible from a fresh clone.
+
+## Phase 04 — Project Control scrollytelling (feat/project-control-scrollytelling)
+
+- OPEN: Section copy (heading, description, 8 principle labels, caption, CTA label) was read by eye from the Figma screenshot; needs approved text.
+- OPEN: Only story panel 1 (request intake) has a supplied image. Panels 2-8, the per-item icon and the floating widget overlay are not supplied; items 2-8 render in the list only (plain text, no link).
+- OPEN: CTA "جرب المنصة" is an inert span until a destination is approved.
+- DECIDED: Photo rights of request-intake.webp are unverified, so photo and source SVG are git-ignored and panel 1 renders a placeholder (docs/PROJECT_CONTROL_LOCAL_IMAGE.md). OPEN: confirm rights, then track.
+- NOTE: Sticky/active/release behavior was verified with 8 TEMPORARY dummy panels (route removed); real production content has exactly one panel (placeholder media).
+- DECIDED: Header boundary marker (.hero-boundary) is now a tall element spanning the dark intro instead of 1px, so instant jumps (anchor links, End, fast scroll) cannot skip it and leave the header transparent.
+- DECIDED: Sticky list only at >=1024px and >=704px viewport height; shorter viewports scroll normally.

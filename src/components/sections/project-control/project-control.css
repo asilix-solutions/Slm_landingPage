@@ -1,0 +1,248 @@
+/*
+ * «كل مشروع تحت سيطرتك من الطلب إلى الربح» — measured from the Figma screenshot of the
+ * 1440 desktop frame (screenshot scale ≈ 0.795):
+ *
+ *   white section, shared 1280px column (80px gutters)
+ *   heading: 2 lines, right-aligned, glyph top ≈127px; description 2 lines (~450px wide)
+ *   divider at ≈319px, content grid starts ≈401px
+ *   story (left) 832px wide; gap 64; principles list (right) 384px — the active pill is 24px
+ *   wider than the text column on each side (text right edge on the 1360px boundary)
+ *   photo 832 × 448, radius 24; caption ~33px below, CTA 125 × 48 (r8, near-black) below it
+ *   list item pitch 63px (56px pill + 7px), first pill aligned with the photo top
+ *
+ * The reference Figma layout-grid overlay (pink columns) is a design guide and is NOT rendered.
+ */
+
+.pc {
+  --pc-ink: #1a1a1a;
+  --pc-muted: #4b5056;
+  --pc-line: #e9e9e9;
+  --pc-active-bg: #fdecec;
+  --pc-gutter: clamp(1rem, 5.6vw, 5rem);
+  --pc-pt: 64px;
+  --pc-pb: 80px;
+  --pc-panel-gap: 72px;
+
+  /* anchors scroll below the fixed header */
+  scroll-margin-top: var(--header-h);
+  padding: var(--pc-pt) var(--pc-gutter) var(--pc-pb);
+  background-color: #fff;
+  color: var(--pc-ink);
+  /* NOTE: no overflow rule here — `overflow: hidden` on an ancestor would stop the sticky list. */
+}
+
+.pc__inner {
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.pc__title {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.pc__description {
+  max-width: 30rem;
+  margin: 16px 0 0;
+  font-size: 1rem;
+  line-height: 25px;
+  color: var(--pc-muted);
+}
+
+.pc__head {
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--pc-line);
+}
+
+.pc__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  padding-top: 40px;
+}
+
+/* ---------- principles list ---------- */
+
+.pc-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pc-steps__item {
+  border-radius: 8px;
+  transition: background-color 200ms ease;
+}
+
+.pc-steps__label {
+  display: block;
+  padding: 16px 20px;
+  font-size: 1.0625rem;
+  line-height: 24px;
+  color: var(--pc-ink);
+  transition: color 200ms ease;
+}
+
+a.pc-steps__label {
+  text-decoration: none;
+}
+
+.pc-steps__item[data-active="true"] {
+  background-color: var(--pc-active-bg);
+}
+
+.pc-steps__item[data-active="true"] .pc-steps__label {
+  font-weight: 600;
+}
+
+/* ---------- story panels ---------- */
+
+.pc__story {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pc-panel-gap);
+}
+
+.pc-panel {
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.pc-panel__media {
+  overflow: hidden;
+  aspect-ratio: 832 / 448;
+  border-radius: 24px;
+  background-color: #e4e4e8;
+}
+
+.pc-panel__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-panel__caption {
+  max-width: 17rem;
+  margin: 28px 0 0;
+  font-size: 1rem;
+  line-height: 24px;
+  color: var(--pc-ink);
+}
+
+.pc-panel__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-top: 28px;
+  padding-inline: 16px;
+  border-radius: 8px;
+  background-color: #111;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: default;
+}
+
+/* ---------- ≥ 744 ---------- */
+
+@media (min-width: 46.5rem) {
+  .pc {
+    --pc-pt: 96px;
+    --pc-pb: 112px;
+  }
+
+  .pc__title {
+    font-size: 2.25rem;
+  }
+
+  .pc__head {
+    padding-bottom: 40px;
+  }
+
+  .pc__grid {
+    padding-top: 56px;
+    gap: 56px;
+  }
+}
+
+/* ---------- ≥ 1024: two columns, sticky list ---------- */
+
+@media (min-width: 64rem) {
+  .pc__grid {
+    /* RTL: the first track (the list) sits on the right */
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    gap: clamp(32px, 4.4vw, 64px);
+    padding-top: 64px;
+  }
+
+  .pc-steps__label {
+    padding: 16px 20px;
+  }
+}
+
+/* Sticky only where the whole list fits under the header; shorter viewports scroll it normally. */
+@media (min-width: 64rem) and (min-height: 44rem) {
+  .pc__aside {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+}
+
+/* ---------- ≥ 1280: reference proportions ---------- */
+
+@media (min-width: 80rem) {
+  .pc {
+    --pc-pt: 120px;
+    --pc-pb: 128px;
+    --pc-panel-gap: 96px;
+  }
+
+  .pc__title {
+    font-size: 2.5rem;
+    line-height: 50px;
+  }
+
+  .pc__head {
+    padding-bottom: 44px;
+  }
+
+  .pc__grid {
+    grid-template-columns: 384px minmax(0, 1fr);
+    gap: 64px;
+    padding-top: 71px;
+  }
+
+  /* pill 24px wider than the text column on both sides, text on the 1360px edge */
+  .pc-steps__item {
+    margin-inline: -24px;
+  }
+
+  .pc-steps__label {
+    padding: 16px 24px;
+    font-size: 1.125rem;
+  }
+
+  .pc-panel__caption {
+    margin-top: 33px;
+  }
+
+  .pc-panel__cta {
+    margin-top: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-steps__item,
+  .pc-steps__label {
+    transition: none;
+  }
+}

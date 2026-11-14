@@ -54,3 +54,6 @@ See D30–D34. `.hero` min-height = `100svh`; photo + shades are full-bleed; tex
 
 ## Safety needs section (Phase 03B, 2026-11-13)
 sections/safety-needs/: SafetyNeeds.tsx (section + decorative mark), FeatureCard.tsx (reusable card, inert action, always-present icon slot), safety-needs.css; data in src/content/safety-needs.ts (typed, `as const satisfies`). Server Components only. See S01-S07 in DECISIONS_AND_OPEN_ITEMS.md.
+
+## Project Control scrollytelling
+Server component ProjectControl renders heading + story panels from src/content/project-control.ts; the only client leaf is ProjectControlSteps (one IntersectionObserver, aria-current, no live region). Sticky is plain CSS on .pc__aside. Add a panel by giving a step a panel object.
