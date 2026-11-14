@@ -1,0 +1,104 @@
+/*
+ * FAQ section — measured from the Figma reference (design-reference/assets/phase-05/faq/
+ * faq-layout-reference.svg, 1440 × 580, and notes/phase-05/figma-faq-layout-detail.png):
+ *
+ *   field #FEFEFE, 80px gutters (1280 content width, same as SafetyNeeds / Metrics)
+ *   heading centred, glyphs ≈ 96–144px from the top; rows at y 208 / 300 / 392
+ *   rows 1280 × 76, gap 16, fill #F1F1F1, radius ≈ 12, question text right-aligned (RTL start)
+ *   section bottom padding ≈ 112 (last row ends at 468 of 580)
+ *
+ * Desktop reference values only: the section height follows content (rows grow when a question
+ * wraps), padding shrinks on small screens.
+ *
+ * "+" icon: owner-requested provisional visual (reference SVG: 14x14 glyph, 2px bars, #6C5B55,
+ * 24px from the row's left edge, vertically centred). Decorative only (aria-hidden): no cursor,
+ * hover or focus styling. Real expand/collapse needs approved answers (see src/content/faq.ts).
+ */
+
+.faq {
+  --faq-bg: #fefefe;
+  --faq-row-bg: #f1f1f1;
+  --faq-ink: #2e3338;
+  --faq-plus: #6c5b55;
+  --faq-gutter: clamp(1rem, 5.6vw, 5rem);
+  --faq-radius: 12px;
+  --faq-gap: 16px;
+  --faq-pt: 56px;
+  --faq-pb: 64px;
+  --faq-title-gap: 32px;
+
+  padding: var(--faq-pt) var(--faq-gutter) var(--faq-pb);
+  background-color: var(--faq-bg);
+  color: var(--faq-ink);
+}
+
+.faq__inner {
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.faq__title {
+  margin: 0 0 var(--faq-title-gap);
+  text-align: center;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2rem);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--faq-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faq__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 76px;
+  padding: 16px 24px;
+  border-radius: var(--faq-radius);
+  background-color: var(--faq-row-bg);
+}
+
+.faq__question {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+/* DOM order: question first => right in RTL; the icon follows => visual left. */
+.faq__plus {
+  flex: none;
+  display: block;
+  color: var(--faq-plus);
+  pointer-events: none;
+}
+
+@media (min-width: 48rem) {
+  .faq {
+    --faq-pt: 72px;
+    --faq-pb: 88px;
+    --faq-title-gap: 48px;
+  }
+
+  .faq__question {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .faq {
+    --faq-pt: 96px;
+    --faq-pb: 112px;
+    --faq-title-gap: 64px;
+  }
+}
