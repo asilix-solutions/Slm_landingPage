@@ -1,4 +1,6 @@
-import { solutions } from "@/content/solutions";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { solutions, type SolutionImage } from "@/content/solutions";
 import { SolutionCard } from "./SolutionCard";
 import { SolutionsCarouselControls } from "./SolutionsCarouselControls";
 import "./solutions.css";
@@ -15,6 +17,16 @@ const SCROLLER_ID = "solutions-scroller";
 const TEMPORARY_REPEAT = 2;
 
 /**
+ * The photos are local-only (git-ignored, rights unverified). An image is rendered only if its
+ * file exists in public/ when the page is rendered on the server, so clean clones and deployments
+ * show the neutral placeholder instead of a broken URL. Deterministic: server-only check, the
+ * result is baked into the HTML (no client-side detection, no hydration difference).
+ */
+function availableImage(image: SolutionImage | null): SolutionImage | null {
+  return image && existsSync(path.join(process.cwd(), "public", image.src)) ? image : null;
+}
+
+/**
  * «حلول سلم تدعمك» — user-controlled horizontal carousel (light section).
  *
  * Server Component. The scroller is a native overflow-x / scroll-snap element,
@@ -22,9 +34,8 @@ const TEMPORARY_REPEAT = 2;
  * component only adds previous/next buttons and a progress bar that mirror the
  * scroll position.
  *
- * CONTENT/MEDIA INCOMPLETE — see src/content/solutions.ts: original images and
- * the title↔image mapping were not supplied, so cards show a neutral image
- * placeholder and no card is a link.
+ * CONTENT/MEDIA INCOMPLETE — see src/content/solutions.ts: the title↔image mapping is
+ * provisional, the photos are local-only (placeholder when absent) and no card is a link.
  */
 export function SolutionsCarousel() {
   const { title, items } = solutions;
@@ -53,7 +64,7 @@ export function SolutionsCarousel() {
             <SolutionCard
               key={key}
               title={item.title}
-              image={item.image}
+              image={availableImage(item.image)}
               repeated={copy > 0}
             />
           ))}

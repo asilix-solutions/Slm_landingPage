@@ -315,3 +315,7 @@ Root causes of the two defects:
 - Hydration mismatch at `QnaCenter.tsx` `.qna__media`: **most likely external DOM mutation (image-overlay browser extension, unconfirmed)**. Evidence: the styles belong to no source file, the SSR HTML never contains the div, and clean production/dev sessions show no error. The attributes (absolute, top/left offset, z-index 1000, pointer cursor) match save/search-by-image hover buttons that extensions append beside `<img>`. Not reproduced by simulated injection (React 19.3 tolerated it), so the exact extension is unproven. No application code changed for this. Remedy to confirm: reload in a Guest/Incognito window or with extensions disabled; if the error vanishes, disable the extension for localhost. If it persists in a clean profile, send the full dev-overlay diff.
 - Hero source limit: a higher-resolution original (>= 2880x1360, ideally 3840x1815) is required for visibly sharper 1440+/Retina rendering; owner to supply.
 - `hero-office.jpg` superseded by `hero-office.webp`; approve deletion.
+
+## Phase 09B — Solutions images
+- Photos disappeared because of `image: null` (content data), not a build, path or loader fault. Restored via declared mapping + server-side existence guard (local-only policy kept).
+- Public release still blocked: licence for all photos; written permission or removal of SAFEQUEST branding in image 02; the title-to-image mapping remains a provisional visual arrangement needing designer approval; the committed low-res Figma screenshot (46493fd) still contains three of the photos.

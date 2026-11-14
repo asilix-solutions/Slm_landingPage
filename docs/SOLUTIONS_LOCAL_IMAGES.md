@@ -1,6 +1,6 @@
 # Solutions carousel — local-only photos (NOT in Git)
 
-**Why:** this repository is public. The four photographs supplied for «حلول سلم تدعمك» (2026-11-13) have **unverified usage/redistribution rights**, and `02-fire-extinguisher-presentation` visibly shows third-party **SAFEQUEST** branding on the products. So no photo and no original SVG wrapper is tracked. A fresh clone renders neutral grey placeholders (`image: null` in `src/content/solutions.ts`); there are no broken image URLs.
+**Why:** this repository is public. The four photographs supplied for «حلول سلم تدعمك» (2026-11-13) have **unverified usage/redistribution rights**, and `02-fire-extinguisher-presentation` visibly shows third-party **SAFEQUEST** branding on the products. So no photo and no original SVG wrapper is tracked. A fresh clone renders neutral grey placeholders (the file-existence check in `SolutionsCarousel.tsx`); there are no broken image URLs.
 
 **Git-ignored paths** (see `.gitignore`; the files stay on the developer's disk):
 - `public/images/solutions-carousel/{01,02,03,05}-*.webp` (810×546 production images)
@@ -10,17 +10,18 @@
 
 Package hashes: `docs/PHASE03C_IMAGE_ASSET_MANIFEST.json` (SVG SHA-256 values; the package ZIP is `Amanix_Phase03C_Solutions_Images_Ready_2026-11-13.zip`).
 
-## Restoring them locally (only after rights are confirmed, or for private local review)
-1. Copy the four WebP files into `public/images/solutions-carousel/` (from the ZIP above).
-2. In `src/content/solutions.ts` replace `image: null` with:
+## How they are wired now (Phase 09B)
+`src/content/solutions.ts` declares the provisional mapping permanently (paths only, no longer `image: null`):
 
-| Card (RTL order) | `image` value |
+| Card (RTL order) | File (810x546, `alt=""`) |
 |---|---|
-| تنفيذ ميداني موثّق | `{ src: "/images/solutions-carousel/01-field-hydrant-worker.webp", width: 810, height: 546, alt: "" }` |
-| إغلاق لا يمكن العبث به | `{ src: "/images/solutions-carousel/02-fire-extinguisher-presentation.webp", width: 810, height: 546, alt: "" }` |
-| فاتورة ضريبية متسلسلة | `{ src: "/images/solutions-carousel/03-abc-extinguisher-sign.webp", width: 810, height: 546, alt: "" }` |
+| تنفيذ ميداني موثّق | `/images/solutions-carousel/01-field-hydrant-worker.webp` |
+| إغلاق لا يمكن العبث به | `/images/solutions-carousel/02-fire-extinguisher-presentation.webp` |
+| فاتورة ضريبية متسلسلة | `/images/solutions-carousel/03-abc-extinguisher-sign.webp` |
 
-`05-fire-extinguisher-gauge.webp` is unused (no approved fourth card). The mapping is visual and provisional; `alt=""` because the photos do not substantiate the captions. `SolutionCard` already renders them with `next/image` (`unoptimized`, lazy, 405:273 `object-fit: cover`); no overlay is needed (the red gradient is baked in).
+The three cards are shown twice (temporary repeat: order 01,02,03,01,02,03; same URLs, no extra downloads). `SolutionsCarousel` (Server Component) passes `image` to `SolutionCard` only if `public/<src>` exists **when the page is rendered**; otherwise `null` -> neutral placeholder. The page is statically prerendered, so the check happens at `next build`: build with the files = photos baked in; build without them (fresh clone, CI, deploy) = placeholders and no broken URL. In `next dev` it is evaluated per request. No client-side detection, so server HTML and hydration are identical. `05-fire-extinguisher-gauge.webp` stays unused.
+
+Local preview vs release: the photos are for the owner's local preview only (git-ignored). A public build must not contain them until rights are confirmed.
 
 ## Before making them public
 - Confirm licence/ownership for each photo and written permission (or removal) for the SAFEQUEST branding in image 02.
