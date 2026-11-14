@@ -2,6 +2,7 @@ import { HeroBoundary } from "@/components/layout/HeroBoundary";
 import { Hero } from "@/components/sections/Hero";
 import { Faq } from "@/components/sections/faq/Faq";
 import { PricingPlans } from "@/components/sections/pricing/PricingPlans";
+import { QnaCenter } from "@/components/sections/qna/QnaCenter";
 import { SolutionsCarousel } from "@/components/sections/solutions/SolutionsCarousel";
 import { MetricsBand } from "@/components/sections/metrics/MetricsBand";
 import { ProjectControl } from "@/components/sections/project-control/ProjectControl";
@@ -31,6 +32,7 @@ export default function HomePage() {
       <MetricsBand />
       <Faq />
       <PricingPlans />
+      <QnaCenter />
     </main>
   );
 }

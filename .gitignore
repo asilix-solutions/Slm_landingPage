@@ -72,3 +72,8 @@ next-env.d.ts
 /public/images/pricing/
 /design-reference/assets/phase-06/
 /design-reference/notes/phase-06/
+
+# Phase 07C Q&A handoff: dashboard screenshot shows third-party branding, rights unverified; kept LOCAL only.
+/public/images/qna/
+/design-reference/assets/phase-07c/
+/design-reference/notes/phase-07c/
