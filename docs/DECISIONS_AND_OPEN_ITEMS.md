@@ -303,3 +303,10 @@ Root causes of the two defects:
 - NO APPROVED ANSWERS (0 of 4). The reference's open row 2 shows generic "Flow / SaaS / dashboard" text that is off-topic: NOT used as content. In production all four rows are collapsed/static with decorative down-chevrons; the open layout (up chevron + answer paragraph) is implemented and only activates when an approved `answer` is set in src/content/qna.ts. Nothing is clickable.
 - OPEN: (1) approved answers for all four questions (data safety, tenant isolation, ZATCA invoices, tamper prevention); (2) whether this section replaces/complements the 3-row FAQ (questions 1/4 overlap); (3) brand name «أمانكس» vs «سلم SLM»; (4) accordion behaviour (single/multi-open), then use native <details> or a button with aria-expanded inside the h3; (5) copy approval for eyebrow/heading/subtitle ("الامتثال الزكوي والهندسي" is a compliance-flavoured claim); (6) mobile/tablet reference.
 - RIGHTS: the dashboard screenshot shows another entity's UI/branding: rights and authenticity unverified, so it is local-only (git-ignored) and must not be presented as a verified Amanix screenshot; a cleared Amanix product screenshot is needed for production. Clean clones render the frame without the image.
+
+## Phase 08 footer — open items
+- Brand: logo says «سلم SLM», copyright says «أمانكس» (kept as in the reference; owner decision needed, same as O-brand in Q&A).
+- «الاسعار» spelling kept; confirm «الأسعار».
+- No destinations: services, pricing (header #pricing/#services placeholders point at ids not in the page), resources, company, legal, accessibility, and all five social profiles. All render as non-link text; social icons are aria-hidden until URLs exist.
+- Copyright owner/year (2026) unconfirmed; footer copy is transcribed, not approved.
+- Footer is in `layout.tsx` (site-wide), outside `<main>`.

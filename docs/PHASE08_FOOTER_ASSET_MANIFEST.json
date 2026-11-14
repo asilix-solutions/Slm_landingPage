@@ -1,0 +1,113 @@
+{
+  "package": "AMANIX Phase 08 Footer",
+  "reference_frame": {
+    "width": 1440,
+    "height": 540
+  },
+  "dark_panel": {
+    "x": 24,
+    "y": 24,
+    "width": 1392,
+    "height": 492,
+    "corner_radius": 8,
+    "fill": "#181818"
+  },
+  "content_lane": {
+    "x0": 104,
+    "x1": 1336,
+    "width": 1232
+  },
+  "source_svg_has_real_text": false,
+  "source_footer_has_embedded_raster": false,
+  "assets": [
+    {
+      "path": "design-reference/assets/phase-08/footer/source-exports/footer-full-reference-1440x540.svg",
+      "bytes": 266349,
+      "sha256": "ec12a4bb927ac7e2eb983021e2802a0a6d9f37005647238d88013587d50a869f",
+      "type": "svg"
+    },
+    {
+      "path": "design-reference/assets/phase-08/footer/source-exports/slm-decorative-mark-209x423.svg",
+      "bytes": 12000,
+      "sha256": "0cfba64e329d78c1d348b26a8139dc485df3f7cd2bdc7579e72f39e59656245d",
+      "type": "svg"
+    },
+    {
+      "path": "design-reference/assets/phase-08/footer/source-exports/slm-logo-white-594x229.svg",
+      "bytes": 18362,
+      "sha256": "c7b2c1b71098fcdca024c06a8141dbf6707081d5c3577a7d350d2f3e525eb296",
+      "type": "svg"
+    },
+    {
+      "path": "design-reference/notes/phase-08/footer/figma-footer-screenshot.png",
+      "bytes": 194933,
+      "sha256": "a6fa1294b0de3ecebf72757d3f9921844027fb66151f16d58a13900dbf05a8ec",
+      "type": "png"
+    },
+    {
+      "path": "design-reference/notes/phase-08/footer/footer-vector-reference-preview-1440x540.png",
+      "bytes": 60795,
+      "sha256": "d057223f6f6a24264e21a0f1808687e820c0a3b9e5cdc6967e6e21ff8c9518a0",
+      "type": "png"
+    },
+    {
+      "path": "design-reference/notes/phase-08/footer/slm-decorative-preview.png",
+      "bytes": 21986,
+      "sha256": "60c264e5b662892ff0dcadd988128599633bbaf10165fd6f16926f0aed4f1da0",
+      "type": "png"
+    },
+    {
+      "path": "design-reference/notes/phase-08/footer/social-icons-preview.png",
+      "bytes": 13423,
+      "sha256": "d246dc85a9dfd28e8e0b03848f15c23d64a8d46af8a80baa926c745b613a809a",
+      "type": "png"
+    },
+    {
+      "path": "public/brand/footer-logo-white.svg",
+      "bytes": 18362,
+      "sha256": "c7b2c1b71098fcdca024c06a8141dbf6707081d5c3577a7d350d2f3e525eb296",
+      "type": "svg"
+    },
+    {
+      "path": "public/images/footer/footer-decorative-slm.svg",
+      "bytes": 12000,
+      "sha256": "0cfba64e329d78c1d348b26a8139dc485df3f7cd2bdc7579e72f39e59656245d",
+      "type": "svg"
+    },
+    {
+      "path": "public/images/footer/social-facebook.svg",
+      "bytes": 825,
+      "sha256": "0e5a1ee5ffc8ec3905cfe2f54fbbf3c9d65dc83b044c0cd63981df6e869f5533",
+      "type": "svg"
+    },
+    {
+      "path": "public/images/footer/social-instagram.svg",
+      "bytes": 1723,
+      "sha256": "725715e6092910e6d8aa7aa3960f50b1117435320f450d395edbca859e9496b9",
+      "type": "svg"
+    },
+    {
+      "path": "public/images/footer/social-linkedin.svg",
+      "bytes": 1032,
+      "sha256": "2ccd318269c8d732964d340d1281e46e336b24a2515ada559549e2beeadc855e",
+      "type": "svg"
+    },
+    {
+      "path": "public/images/footer/social-x.svg",
+      "bytes": 606,
+      "sha256": "ecccafa5be9df2a4c04881138bbf51620cc6419af146c4b743fc11aa2aed377e",
+      "type": "svg"
+    },
+    {
+      "path": "public/images/footer/social-youtube.svg",
+      "bytes": 1088,
+      "sha256": "c24108eb767a5dd14c250ee110be498b8a51d879f5c3c2074843b25e5dce8a7b",
+      "type": "svg"
+    }
+  ],
+  "notes": [
+    "Original visible copy is outlined and has been transcribed from the supplied visual reference, not verified by a product owner.",
+    "The five social icon files were extracted directly from the supplied Footer.svg groups at their original 24x24 viewBoxes.",
+    "Logo and decorative outline remain native vector assets; no raster conversion performed."
+  ]
+}

@@ -1,0 +1,269 @@
+/*
+ * Site footer — measured from design-reference/assets/phase-08/footer/source-exports/
+ * footer-full-reference-1440x540.svg (1440 x 540, white frame):
+ *
+ *   dark card x24 y24 1392 x 492, radius 8, #181818   => 24px white margin on all four sides
+ *   inner lane x104..1336 (1232px)                     => 80px card padding at the reference
+ *   logo 164 x 63.2 at lane right, 76px below the card top
+ *   columns: right edges at 1024 / 712 / 400 (312px pitch from the logo track), heading centre
+ *     y115 (#A5A5A5), links at y159 / 195 / 231 (36px pitch, #F3F7F8)
+ *   social row centre y377: label at the lane right, five 24px icons, 24px gaps
+ *   separator ~y418, legal row centre y442 (copyright #A5A5A5, links #F3F7F8; gaps 58 / 16)
+ *   decoration 209 x 423 at the card's left edge, 34px below its top, clipped by the card
+ *
+ * The 492px height is the desktop reference only: on narrower screens the card grows with its
+ * content. The decoration is hidden below 64rem (it would sit under the link columns).
+ */
+
+.site-footer {
+  --sf-bg: #fff;
+  --sf-card: #181818;
+  --sf-muted: #a5a5a5;
+  --sf-ink: #f3f7f8;
+  --sf-rule: rgb(255 255 255 / 0.12);
+  --sf-margin: 12px;
+  --sf-pad-x: 20px;
+  --sf-pad-top: 36px;
+  --sf-pad-bottom: 28px;
+
+  padding: var(--sf-margin);
+  background-color: var(--sf-bg);
+}
+
+.site-footer__card {
+  position: relative;
+  overflow: hidden; /* clips the decoration to the rounded card */
+  border-radius: 8px;
+  background-color: var(--sf-card);
+  color: var(--sf-ink);
+  padding: var(--sf-pad-top) var(--sf-pad-x) var(--sf-pad-bottom);
+}
+
+.site-footer__deco {
+  display: none;
+  position: absolute;
+  top: 34px;
+  left: 0; /* physical: the artwork hugs the card's left edge in the RTL design too */
+  width: 209px;
+  height: 423px;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.site-footer__lane {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1232px;
+  margin-inline: auto;
+}
+
+/* ---------- logo + link columns ---------- */
+
+.site-footer__top {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.site-footer__logo {
+  display: block;
+  width: 164px;
+  height: auto;
+}
+
+.site-footer__nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 16px;
+}
+
+.site-footer__col {
+  min-width: 0;
+}
+
+.site-footer__col-title {
+  margin: 0 0 20px;
+  font-size: 1.125rem; /* text widths in the reference imply ~18px (links) / 16px (legal) */
+  font-weight: 400;
+  line-height: 1.5rem;
+  color: var(--sf-muted);
+}
+
+.site-footer__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  color: var(--sf-ink);
+}
+
+/* ---------- social ---------- */
+
+.site-footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 40px;
+}
+
+.site-footer__social-label {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  color: var(--sf-muted);
+}
+
+.site-footer__icons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__icons li {
+  display: flex;
+  width: 24px;
+  height: 24px;
+}
+
+.site-footer__icons img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- rule + legal ---------- */
+
+.site-footer__rule {
+  height: 0;
+  margin: 29px 0 0;
+  border: 0;
+  border-top: 1px solid var(--sf-rule);
+}
+
+.site-footer__legal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.site-footer__copyright {
+  margin: 0;
+  color: var(--sf-muted);
+}
+
+.site-footer__legal-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--sf-ink);
+}
+
+/* ---------- breakpoints ---------- */
+
+@media (min-width: 40rem) {
+  .site-footer__nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 48rem) {
+  .site-footer {
+    --sf-margin: 16px;
+    --sf-pad-x: 40px;
+    --sf-pad-top: 48px;
+    --sf-pad-bottom: 40px;
+  }
+
+  .site-footer__legal {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 58px;
+  }
+}
+
+@media (min-width: 64rem) {
+  .site-footer {
+    --sf-margin: 24px;
+    --sf-pad-x: clamp(40px, 5.6vw, 80px);
+    --sf-pad-top: 76px;
+    --sf-pad-bottom: 62px;
+  }
+
+  .site-footer__card {
+    min-height: 492px;
+    display: flex;
+    flex-direction: column;
+    /* keep the lane clear of the 209px decoration until the full-width layout below */
+    padding-left: 232px; /* physical: the decoration sits at the left edge in RTL as well */
+  }
+
+  .site-footer__deco {
+    display: block;
+  }
+
+  .site-footer__lane {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .site-footer__top {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .site-footer__logo {
+    flex: none;
+  }
+
+  .site-footer__nav {
+    flex: 1 1 auto;
+    gap: 16px 24px;
+    padding-top: 3px;
+  }
+
+  .site-footer__social {
+    margin-top: auto;
+    padding-top: 40px;
+    flex-wrap: nowrap;
+  }
+
+  .site-footer__legal {
+    min-height: 36px;
+  }
+}
+
+@media (min-width: 90rem) {
+  .site-footer__card {
+    padding-inline: 80px;
+  }
+
+  /* Exact reference grid: 312px logo track + 312px pitch per column (third column takes the rest). */
+  .site-footer__top {
+    display: grid;
+    grid-template-columns: 312px minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .site-footer__nav {
+    grid-template-columns: 312px 312px minmax(0, 1fr);
+    gap: 0;
+  }
+}

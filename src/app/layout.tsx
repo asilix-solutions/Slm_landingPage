@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ibmPlexSansArabic, notoSansArabic } from "@/lib/fonts";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import "./globals.css";
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
