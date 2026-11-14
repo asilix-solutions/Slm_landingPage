@@ -46,3 +46,11 @@ next-env.d.ts
 
 # Claude Code local-only settings
 /.claude/settings.local.json
+
+# Phase 03C carousel photos: third-party / unverified usage rights, public repository.
+# Kept LOCAL only — see docs/SOLUTIONS_LOCAL_IMAGES.md to restore them once rights are confirmed.
+/public/images/solutions-carousel/
+/design-reference/assets/phase-03/solutions-carousel/source-exports/
+/design-reference/notes/phase-03/solutions-carousel/four-unique-assets-contact-sheet.jpg
+/design-reference/notes/phase-03/solutions-carousel/solutions-figma-capture-20261113.png
+/docs/qa-screenshots/solutions-carousel/with-images-*.jpg

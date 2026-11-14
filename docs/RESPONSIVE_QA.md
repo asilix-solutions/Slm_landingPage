@@ -199,3 +199,12 @@ Method: DOM geometry vs reference measurements; Web API checks; a throw-away pag
 
 ## Final carousel UX correction QA (2026-11-13)
 See C11-C14 in DECISIONS_AND_OPEN_ITEMS.md for the measured table (1440/1920 inset 1056px viewport, range 222/223, last card flush; 1024/744/390 full-bleed with natural overflow 366/587/598). Screenshot: docs/qa-screenshots/solutions-carousel/interim-3-cards-inset-viewport-1440x900.jpg. Reduced-motion path checked by stubbing the no-preference query (buttons use behavior:auto); real OS emulation, touch on device, screen reader, Safari/Firefox, Lighthouse: NOT RUN.
+
+## Carousel images QA (2026-11-13)
+See I01-I06 in DECISIONS_AND_OPEN_ITEMS.md: 6 widths (1920/1440/1024/744/390/320) PASS for image load, ratio, overflow, RTL, progress; screenshot with-images-1440x900.jpg. Emulated reduced motion, device touch, screen reader, Safari/Firefox, Lighthouse: NOT RUN.
+
+## Carousel grid alignment QA (2026-11-14)
+See A01-A05 in DECISIONS_AND_OPEN_ITEMS.md: Safety Needs vs Solutions boundaries are identical (0px left/right difference for scroller and progress bar) at 1920/1440/1280/1024/744/390; no document overflow; thumb = clientW/scrollW. Screenshots at 1440/1920 NOT captured (Browser pane too small). Touch on device, screen reader, Safari/Firefox, Lighthouse: NOT RUN.
+
+## Repeated-cards QA (2026-11-14)
+See R01-R03 in DECISIONS_AND_OPEN_ITEMS.md: 6 cards (3 repeated, aria-hidden), real overflow at 1920/1440/1024/744/390 (ranges 1310/1323/1649/1851/1559), last card fully visible at the end, thumb equals clientW/scrollW, keyboard and buttons verified, no document overflow.

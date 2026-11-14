@@ -6,6 +6,15 @@ import "./solutions.css";
 const SCROLLER_ID = "solutions-scroller";
 
 /**
+ * TEMPORARY (owner-authorised): the three approved cards are rendered twice, in the same
+ * order, so the carousel has real overflow while only three solutions exist. The repeat is
+ * purely presentational: copies are hidden from assistive technology (identical text would
+ * be announced twice), reuse the same image files (no extra downloads) and carry unique
+ * keys. Set to 1 — or delete — once additional approved solutions are supplied.
+ */
+const TEMPORARY_REPEAT = 2;
+
+/**
  * «حلول سلم تدعمك» — user-controlled horizontal carousel (light section).
  *
  * Server Component. The scroller is a native overflow-x / scroll-snap element,
@@ -19,6 +28,9 @@ const SCROLLER_ID = "solutions-scroller";
  */
 export function SolutionsCarousel() {
   const { title, items } = solutions;
+  const cards = Array.from({ length: TEMPORARY_REPEAT }, (_, copy) =>
+    items.map((item) => ({ item, copy, key: `${item.id}-${copy}` })),
+  ).flat();
 
   return (
     <section aria-labelledby="solutions-title" className="solutions">
@@ -37,8 +49,13 @@ export function SolutionsCarousel() {
         tabIndex={0}
       >
         <ul className="solutions__track">
-          {items.map((item) => (
-            <SolutionCard key={item.id} title={item.title} image={item.image} />
+          {cards.map(({ item, copy, key }) => (
+            <SolutionCard
+              key={key}
+              title={item.title}
+              image={item.image}
+              repeated={copy > 0}
+            />
           ))}
         </ul>
       </div>

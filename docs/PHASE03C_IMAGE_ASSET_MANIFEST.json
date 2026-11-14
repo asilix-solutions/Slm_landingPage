@@ -1,0 +1,76 @@
+{
+  "purpose": "Amanix Phase 03C carousel: manual image handoff (no Figma MCP)",
+  "source": "Six user-uploaded SVG exports; 4 visually/file-distinct; 2 exact duplicates",
+  "display_ratio": "405:273",
+  "sources": [
+    {
+      "number": 1,
+      "stored_at": "design-reference/assets/phase-03/solutions-carousel/source-exports/01-field-hydrant-worker.svg",
+      "sha256": "ee0f0bc150dcb432d0fab0c5af3e6afdd17c83199676487f3e7eff8c18c21fb5",
+      "duplicate_of": null
+    },
+    {
+      "number": 2,
+      "stored_at": "design-reference/assets/phase-03/solutions-carousel/source-exports/02-fire-extinguisher-presentation.svg",
+      "sha256": "6aa62fd1ddc2d13f0fb5bfa579cf88839abd322435eb0ee26953e5f2d0da3799",
+      "duplicate_of": null
+    },
+    {
+      "number": 3,
+      "stored_at": "design-reference/assets/phase-03/solutions-carousel/source-exports/03-abc-extinguisher-sign.svg",
+      "sha256": "b5d71195e8aa5dbb50c6a1ee54a0b0bfff5514f16ae76808d4f58121186d0469",
+      "duplicate_of": null
+    },
+    {
+      "number": 4,
+      "stored_at": "design-reference/assets/phase-03/solutions-carousel/source-exports/04-abc-extinguisher-sign-DUPLICATE.svg",
+      "sha256": "b5d71195e8aa5dbb50c6a1ee54a0b0bfff5514f16ae76808d4f58121186d0469",
+      "duplicate_of": 3
+    },
+    {
+      "number": 5,
+      "stored_at": "design-reference/assets/phase-03/solutions-carousel/source-exports/05-fire-extinguisher-gauge.svg",
+      "sha256": "f81719eb91fb98cf7e375858092e2c29f4cee4dd0247ca6d22db84794b783823",
+      "duplicate_of": null
+    },
+    {
+      "number": 6,
+      "stored_at": "design-reference/assets/phase-03/solutions-carousel/source-exports/06-fire-extinguisher-gauge-DUPLICATE.svg",
+      "sha256": "f81719eb91fb98cf7e375858092e2c29f4cee4dd0247ca6d22db84794b783823",
+      "duplicate_of": 5
+    }
+  ],
+  "production": [
+    {
+      "source_number": 1,
+      "public_path": "/images/solutions-carousel/01-field-hydrant-worker.webp",
+      "dimensions": "810x546",
+      "bytes": 24148
+    },
+    {
+      "source_number": 2,
+      "public_path": "/images/solutions-carousel/02-fire-extinguisher-presentation.webp",
+      "dimensions": "810x546",
+      "bytes": 21516
+    },
+    {
+      "source_number": 3,
+      "public_path": "/images/solutions-carousel/03-abc-extinguisher-sign.webp",
+      "dimensions": "810x546",
+      "bytes": 13344
+    },
+    {
+      "source_number": 5,
+      "public_path": "/images/solutions-carousel/05-fire-extinguisher-gauge.webp",
+      "dimensions": "810x546",
+      "bytes": 19964
+    }
+  ],
+  "remarks": [
+    "Files 03/04 are bit-for-bit identical; 05/06 are bit-for-bit identical.",
+    "Each source SVG wraps a JPEG and overlays gradients, so keep source as reference and use rendered WebP for Next.js.",
+    "Images are illustrative and cannot validate copy such as invoice/field compliance claims.",
+    "User authorizes reusing images in existing slots, but not inventing new card titles, services, or claims.",
+    "Figma capture is evidence only, never a production image."
+  ]
+}
