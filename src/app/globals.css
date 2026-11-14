@@ -347,12 +347,18 @@
     --header-transition-zone: 5rem; /* 80px before the Hero reaches the header's bottom edge */
   }
 
+  /*
+   * The marker spans the whole dark region EXCEPT its last (header + 80px). Because it is tall,
+   * an IntersectionObserver can never skip it (a 1px marker is jumped over by anchor links,
+   * End/PageDown, fast flicks, and never fires): it stays intersecting while any part is in
+   * view and flips exactly when its bottom edge leaves the top of the viewport.
+   */
   .hero-boundary {
     position: absolute;
     inset-inline-start: 0;
+    top: 0;
     bottom: calc(var(--header-h) + var(--header-transition-zone));
     width: 1px;
-    height: 1px;
     pointer-events: none;
   }
 }
