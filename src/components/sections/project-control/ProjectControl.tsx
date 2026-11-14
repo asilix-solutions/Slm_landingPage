@@ -1,7 +1,8 @@
-import Image from "next/image";
-import { projectControl } from "@/content/project-control";
-import { ArrowIcon } from "@/components/ui/ArrowIcon";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { projectControl, storyPanel } from "@/content/project-control";
 import { ProjectControlSteps } from "./ProjectControlSteps";
+import { StoryPanel } from "./StoryPanel";
 import "./project-control.css";
 
 const PANEL_PREFIX = "pc-panel-";
@@ -14,12 +15,17 @@ const PANEL_PREFIX = "pc-panel-";
  * `position: sticky` (≥1024px and tall enough viewports), and the only JavaScript is the
  * small client list that highlights the item of the panel in view.
  *
- * INCOMPLETE CONTENT — see src/content/project-control.ts: only the first panel has supplied
- * material; the other seven steps render in the list only.
+ * All eight panels repeat the ONE owner-approved story-panel composition (src/content/project-control.ts). The photo is
+ * git-ignored (unverified rights): it is rendered only if the file exists locally, so a fresh clone
+ * shows a neutral placeholder instead of a broken URL. Evaluated at build/render time (static page).
  */
+function imageAvailable(src: string) {
+  return existsSync(path.join(process.cwd(), "public", src));
+}
+
 export function ProjectControl() {
   const { title, description, steps } = projectControl;
-  const panels = steps.filter((step) => step.panel);
+  const hasImage = imageAvailable(storyPanel.image.src);
 
   return (
     <section aria-labelledby="pc-title" className="pc">
@@ -37,40 +43,14 @@ export function ProjectControl() {
           </div>
 
           <div className="pc__story">
-            {panels.map((step) => {
-              const panel = step.panel!;
-              return (
-                <article
-                  key={step.id}
-                  id={PANEL_PREFIX + step.id}
-                  className="pc-panel"
-                  aria-label={step.label}
-                >
-                  {/* Placeholder (no image) is decorative: hidden from assistive tech. */}
-                  <div
-                    className="pc-panel__media"
-                    aria-hidden={panel.image ? undefined : true}
-                  >
-                    {panel.image && (
-                      <Image
-                        src={panel.image.src}
-                        alt={panel.image.alt}
-                        width={panel.image.width}
-                        height={panel.image.height}
-                        sizes="(min-width: 1280px) 832px, calc(100vw - 2rem)"
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
-                  <p className="pc-panel__caption">{panel.caption}</p>
-                  {/* Inert: no approved destination yet. */}
-                  <span className="pc-panel__cta">
-                    {panel.ctaLabel}
-                    <ArrowIcon />
-                  </span>
-                </article>
-              );
-            })}
+            {steps.map((step) => (
+              <StoryPanel
+                key={step.id}
+                id={PANEL_PREFIX + step.id}
+                label={step.label}
+                imageAvailable={hasImage}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -227,3 +227,15 @@ Root causes of the two defects:
 - NOTE: Sticky/active/release behavior was verified with 8 TEMPORARY dummy panels (route removed); real production content has exactly one panel (placeholder media).
 - DECIDED: Header boundary marker (.hero-boundary) is now a tall element spanning the dark intro instead of 1px, so instant jumps (anchor links, End, fast scroll) cannot skip it and leave the header transparent.
 - DECIDED: Sticky list only at >=1024px and >=704px viewport height; shorter viewports scroll normally.
+
+## Phase 04 — eight panels with one shared image
+- DECIDED (owner-approved): all eight story panels reuse the SAME single image (`sharedImage`, one path, one file, one optimizer cache entry). No per-step images exist; `panel.image` can override later.
+- Only panel 1 has caption + inert CTA (the only supplied copy). Panels 2-8 have none; no copy, overlays or claims were invented. Each panel has a visually hidden h3 (the step label). OPEN: captions/CTAs/overlays for panels 2-8, distinct images.
+- Photo remains LOCAL ONLY (git-ignored, rights unverified). ProjectControl renders it only if the file exists at build time; fresh clone = 8 decorative placeholders, no broken URL (verified by building without the file).
+- Known limit: below 1024px (list not sticky, off-screen) the last panel can be unreachable by the observer band at the very page end, so the (invisible) active state stays on item 7. No visible effect; revisit if the list becomes visible there.
+
+## Phase 04 — CORRECTION: whole first-panel composition repeated (supersedes the two image-only notes above)
+- DECIDED (owner explicitly approved): the ENTIRE first story-panel composition — same image, same caption, same «جرب المنصة» CTA, same spacing/typography/radius — is repeated for all eight steps. Single source: `storyPanel` in src/content/project-control.ts, rendered by the new `StoryPanel` server component (8 instances, ids `pc-panel-<step-id>`, hidden h3 = step label). Only the right-hand list labels differ. One image file, one optimizer entry.
+- The earlier "panels 2-8 have no caption/CTA" state was a misreading and no longer applies. The caption/CTA/labels are still unconfirmed copy read from the Figma screenshot.
+- ACCEPTANCE BLOCKER: the CTA destination is not approved. It stays an inert span (no href, no `#`, no fake navigation or success state) in all eight panels.
+- Remaining: owner-approved distinct per-step copy/images if ever wanted; photo rights (image stays git-ignored; fresh clone = placeholders).

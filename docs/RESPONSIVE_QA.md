@@ -223,3 +223,21 @@ Widths 390/744/1024/1440/1920: header transparent at top and inside the dark Her
 
 ### Project Control as committed (one real panel)
 Panel 1 renders a decorative placeholder (aria-hidden, 0 broken images) with real caption/CTA text; list has 1 link + 7 plain-text items. Sticky/active/release were verified earlier with temporary dummy panels only, not with production content. NOT RUN: reduced-motion OS emulation, screen reader pass, screenshots.
+
+### Project Control — eight panels, shared image (production build, Claude browser pane)
+Per width: all 8 panels render (8 imgs, 0 broken), no horizontal overflow, story left of list (RTL), page end reachable.
+- 1440 / 1920 / 1024x768: sticky list (top = header + 24px) stays visible at panel 5; active index follows panels 1->8 down and 8->1 up exactly; list releases at the story end (aside bottom <= story bottom); 1920 media capped at 832px.
+- 390 / 744: single column, list static; active state tracked 1->7 down / 7->1 up (panel 8 not reachable by the band at page end; list not visible there). No overflow.
+- Panel/media geometry: 1440 media 817x440, 1920 832x448, 1024 529x285, 744 661x356, 390 346x186.
+- Fresh-clone fallback: building without request-intake.webp -> 0 image references, 8 aria-hidden placeholders.
+- NOT RUN: screenshots, OS reduced-motion emulation, screen-reader pass, 320/375/768/1280 re-run, Lighthouse.
+
+### Project Control — eight identical StoryPanels (production build, Claude browser pane)
+Per width 390/744/1024/1440/1920: 8 panels, 8 unique panel ids and no duplicate ids on the page; markup identical across panels after stripping ids/labels; measured geometry (media/caption/CTA offsets, sizes, panel height) identical for all eight; caption and CTA visible and not clipped; CTA is a SPAN everywhere (no href); no horizontal overflow; page end reachable after the section.
+- Panel geometry (media / caption / CTA / panel height): 1440 817x440 / 272x48... CTA 144x48 / 601; 1920 832x448, 609; 1024 529x285, 437; 744 661x356, 508; 390 346x186, 338.
+- 1024x768, 1440, 1920: list sticky (header+24px) at panel 5; active 1->8 down and 8->1 up exact; released at story end.
+- 390 / 744: single column, list static (not visible); 744 tracks 1->8 both ways; 390 reaches 1->7 (panel 8 not reachable by the band at page end; invisible there).
+- NOT RUN: screenshots/pixel diff of first-middle-last, OS reduced-motion emulation, screen-reader pass, 320/375/768/1280, Lighthouse, CLS measurement.
+
+### Project Control — panel 8 activation fix (supersedes the "390: reaches 1->7" notes above)
+ProjectControlSteps now also observes the last panel with threshold 1: when the final panel is completely on screen it is the active step (geometry-based, no document-bottom hardcode); otherwise the middle-band logic applies. Verified in the production build at 390, 744, 1024x768 and 1440x900 (+532 pane width): centre-each-panel down "01234567", up "76543210", jump to page end -> 7, and 60px gradual scroll down "01234567" / up "76543210" (monotonic, no flicker); sticky list at >=1024 unchanged; no overflow. 1920 not re-run after this change.

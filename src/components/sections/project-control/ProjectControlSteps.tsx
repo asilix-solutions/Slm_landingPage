@@ -16,22 +16,34 @@ type Props = {
  * Only this component is client code. One IntersectionObserver watches the panels — no
  * scroll listener, no per-frame work; React state changes only when the active panel
  * actually changes. The active item gets `aria-current="true"` (no live region, so
- * assistive technology is not interrupted while scrolling). Items with a panel are real
- * in-page links; items without one (material not supplied yet) are plain text.
+ * assistive technology is not interrupted while scrolling). Every item is a real
+ * in-page link to its panel.
  */
 export function ProjectControlSteps({ steps, panelPrefix }: Props) {
-  const firstWithPanel = steps.find((step) => step.panel)?.id ?? null;
-  const [activeId, setActiveId] = useState<string | null>(firstWithPanel);
+  const [activeId, setActiveId] = useState<string | null>(steps[0]?.id ?? null);
 
   useEffect(() => {
     const panels = steps
-      .filter((step) => step.panel)
       .map((step) => ({ id: step.id, el: document.getElementById(panelPrefix + step.id) }))
       .filter((entry): entry is { id: string; el: HTMLElement } => entry.el !== null);
     if (panels.length === 0) return;
 
     const inBand = new Set<string>();
-    const observer = new IntersectionObserver(
+    let lastFullyVisible = false;
+    const lastPanel = panels[panels.length - 1];
+
+    const update = () => {
+      // The final panel can never reach the middle band when the section ends near the bottom of
+      // the viewport (single column, tall viewports). Once it is completely on screen it is the
+      // active one. Otherwise: first panel (document order) inside the band; keep the previous one
+      // between panels.
+      const next = lastFullyVisible
+        ? lastPanel.id
+        : panels.find((panel) => inBand.has(panel.id))?.id;
+      if (next) setActiveId(next);
+    };
+
+    const bandObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const id = panels.find((panel) => panel.el === entry.target)?.id;
@@ -39,15 +51,24 @@ export function ProjectControlSteps({ steps, panelPrefix }: Props) {
           if (entry.isIntersecting) inBand.add(id);
           else inBand.delete(id);
         }
-        // First panel (document order) inside the band; keep the previous one between panels.
-        const next = panels.find((panel) => inBand.has(panel.id))?.id;
-        if (next) setActiveId(next);
+        update();
       },
       // A thin band across the middle of the viewport (below the fixed header).
       { rootMargin: "-40% 0px -45% 0px", threshold: 0 },
     );
-    panels.forEach((panel) => observer.observe(panel.el));
-    return () => observer.disconnect();
+    const lastObserver = new IntersectionObserver(
+      ([entry]) => {
+        lastFullyVisible = entry.isIntersecting;
+        update();
+      },
+      { threshold: 1 },
+    );
+    panels.forEach((panel) => bandObserver.observe(panel.el));
+    lastObserver.observe(lastPanel.el);
+    return () => {
+      bandObserver.disconnect();
+      lastObserver.disconnect();
+    };
   }, [steps, panelPrefix]);
 
   return (
@@ -60,17 +81,13 @@ export function ProjectControlSteps({ steps, panelPrefix }: Props) {
             className="pc-steps__item"
             data-active={active ? "true" : undefined}
           >
-            {step.panel ? (
-              <a
-                href={`#${panelPrefix}${step.id}`}
-                className="pc-steps__label"
-                aria-current={active ? "true" : undefined}
-              >
-                {step.label}
-              </a>
-            ) : (
-              <span className="pc-steps__label">{step.label}</span>
-            )}
+            <a
+              href={`#${panelPrefix}${step.id}`}
+              className="pc-steps__label"
+              aria-current={active ? "true" : undefined}
+            >
+              {step.label}
+            </a>
           </li>
         );
       })}
