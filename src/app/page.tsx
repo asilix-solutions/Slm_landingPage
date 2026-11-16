@@ -1,22 +1,38 @@
+import { HeroBoundary } from "@/components/layout/HeroBoundary";
+import { Hero } from "@/components/sections/Hero";
+import { Faq } from "@/components/sections/faq/Faq";
+import { PricingPlans } from "@/components/sections/pricing/PricingPlans";
+import { QnaCenter } from "@/components/sections/qna/QnaCenter";
+import { SolutionsCarousel } from "@/components/sections/solutions/SolutionsCarousel";
+import { MetricsBand } from "@/components/sections/metrics/MetricsBand";
+import { ProjectControl } from "@/components/sections/project-control/ProjectControl";
+import { SafetyNeeds } from "@/components/sections/safety-needs/SafetyNeeds";
+import { TrustStrip } from "@/components/sections/TrustStrip";
+
 /**
  * Landing page composition root (Server Component).
+ * Sections are added one slice at a time (docs/IMPLEMENTATION_PLAN.md).
  *
- * FOUNDATION SLICE: intentionally skeletal. Sections are added one slice at a
- * time from src/components/sections/ (Header + Hero next — see
- * docs/IMPLEMENTATION_PLAN.md). The temporary H1 below is replaced by the
- * approved Hero headline; no marketing copy is invented here.
+ * The photographic Hero and the trust strip form ONE dark region
+ * (.dark-intro). The header boundary marker lives at the end of that region,
+ * so the header stays transparent over both and turns white just before the
+ * following light section.
  */
 export default function HomePage() {
   return (
     <main id="main-content" tabIndex={-1} className="outline-none">
-      <section
-        aria-labelledby="page-title"
-        className="container-page py-16"
-      >
-        <h1 id="page-title" className="font-display text-4xl" dir="ltr">
-          Amanix
-        </h1>
-      </section>
+      <div className="dark-intro">
+        <Hero />
+        <TrustStrip />
+        <HeroBoundary />
+      </div>
+      <SafetyNeeds />
+      <SolutionsCarousel />
+      <ProjectControl />
+      <MetricsBand />
+      <Faq />
+      <PricingPlans />
+      <QnaCenter />
     </main>
   );
 }

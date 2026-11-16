@@ -1,0 +1,205 @@
+/*
+ * Safety-needs section — measured from the Figma capture
+ * (design-reference/assets/phase-03/safety-needs-full-figma-capture.png and
+ * safety-needs-card-measurements.png; capture scale ≈ 0.511 of the 1440 frame):
+ *
+ *   frame 1440 × 1515.94, white, 80px side gutters (1280 content width)
+ *   heading: right-aligned, glyph top ≈ 178px, colour #2E3338
+ *   cards: 3 columns × 400px, 40px gaps, rows start at 250 / 630 / 1010,
+ *          card 400 × 339.98, padding 32, gap 16, radius 16, 1px inside #E9E9E9
+ *   inside a card (design px from the card's top-right): icon 55px glyph at
+ *          top 41 / right 43 (=> 71px slot), title glyph 123–148, description
+ *          lines 24px apart, action (red, underlined) glued to the bottom
+ *   decorative SLM mark: original 607 × 1260, left edge on the frame's left
+ *          edge, top at 128px, behind the cards (cards are opaque white)
+ *
+ * These are desktop reference values, not fixed layout: the grid collapses to
+ * 2 and 1 columns, card height follows content (min 340 only on desktop) and
+ * the mark scales down on narrow screens.
+ */
+
+.needs {
+  --needs-bg: #fff;
+  --needs-ink: #2e3338;
+  --needs-muted: #4b5056;
+  --needs-border: #e9e9e9;
+  --needs-red: #ef2d28;
+  --needs-gutter: clamp(1rem, 5.6vw, 5rem);
+  --needs-gap: 16px;
+  --needs-pt: 64px;
+  --needs-pb: 80px;
+  --needs-title-gap: 24px;
+
+  position: relative;
+  overflow: hidden; /* clips the decorative mark at the section edges */
+  padding: var(--needs-pt) var(--needs-gutter) var(--needs-pb);
+  background-color: var(--needs-bg);
+  color: var(--needs-ink);
+}
+
+.needs__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.needs__title {
+  margin: 0 0 var(--needs-title-gap);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--needs-ink);
+}
+
+/* ---------- decorative mark ---------- */
+
+.needs__art {
+  position: absolute;
+  z-index: 0;
+  top: 9rem; /* below the (possibly two-line) heading on small screens */
+  left: 0; /* physical: the artwork is clipped on the left by design */
+  width: 273px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.needs__art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+/* ---------- grid ---------- */
+
+.needs__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--needs-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- card ---------- */
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--needs-border);
+  border-radius: 16px;
+  background-color: #fff; /* opaque: hides the mark behind it, as in the design */
+}
+
+/* 71px slot = 55px icon + 8px breathing room on every side (reference offsets). */
+.feature-card__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 71px;
+  height: 71px;
+}
+
+.feature-card__icon img {
+  display: block;
+  width: 55px;
+  height: 55px;
+}
+
+.feature-card__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 32px;
+  color: var(--needs-ink);
+}
+
+.feature-card__text {
+  margin: 0;
+  font-size: 0.9375rem; /* 15px: fitted to the reference line widths */
+  line-height: 24px;
+  color: var(--needs-muted);
+}
+
+/* Inert: no approved destination yet (see src/content/safety-needs.ts). */
+.feature-card__action {
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 0.6875rem; /* 11px: reference text is ~10.6px */
+  line-height: 20px;
+  color: var(--needs-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: default;
+}
+
+/* ---------- ≥ 640: two columns ---------- */
+
+@media (min-width: 40rem) {
+  .needs {
+    --needs-gap: 24px;
+    --needs-pt: 80px;
+    --needs-pb: 96px;
+    --needs-title-gap: 32px;
+  }
+
+  .needs__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feature-card {
+    padding: 32px;
+  }
+
+  .needs__title {
+    font-size: 1.75rem;
+  }
+
+  .needs__art {
+    top: 7.5rem;
+    width: 364px;
+  }
+}
+
+/* ---------- ≥ 1024: three columns, desktop card proportions ---------- */
+
+@media (min-width: 64rem) {
+  .needs {
+    --needs-pt: 171px; /* heading glyph top at 178px, as in the reference */
+    --needs-pb: 166px;
+    --needs-title-gap: 33px; /* card rows start at 250px */
+  }
+
+  .needs__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .needs__title {
+    font-size: 2.04rem; /* fitted: reference heading is 389px wide */
+  }
+
+  .feature-card__title {
+    font-size: 1.5rem;
+  }
+
+  .feature-card {
+    min-height: 340px;
+  }
+
+  .needs__art {
+    top: 128px;
+    /* native 607px from 1280px up; scaled below so it stays left of the heading */
+    width: min(607px, 47.4vw);
+  }
+}
+
+/* ---------- ≥ 1280: reference gaps ---------- */
+
+@media (min-width: 80rem) {
+  .needs {
+    --needs-gap: 40px;
+  }
+}

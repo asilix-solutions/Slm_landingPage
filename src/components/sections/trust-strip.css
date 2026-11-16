@@ -1,0 +1,254 @@
+/*
+ * Trust strip — measured from the four approved reference screens
+ * (design-reference/screens, via SVG element geometry) and the Figma capture
+ * (design-reference/assets/phase-03/trust-strip-full-figma-capture.png).
+ *
+ *   1440: black band 431px; title 55px from the top; logo TILES (87x60, r14)
+ *         with the caption BELOW; item pitch 177; edge fade 160px.
+ *   1024: band 328px; white CARDS 96x113 (logo + caption inside); pitch 125.9.
+ *    744: band 278px; cards 86.4x101.5; pitch 113.3.
+ *    390: band 239px; cards 66.9x79;  pitch 87.7.
+ * Logo box = 0.3556 x card width (48px at the 135px-wide base card); card
+ * radius = 0.1185 x width. Everything is drawn at 70% opacity in the design.
+ * Between references values are interpolated linearly on the viewport width.
+ *
+ * Marquee: the track holds identical groups and translates by exactly one
+ * group (--n items x --pitch) => seamless. Direction: toward the inline-start
+ * side (rightwards in RTL), i.e. new content arrives from the end side, the
+ * mirror of an LTR marquee. Duration ~ group width / 35px/s (set per layout).
+ */
+
+.trust {
+  --strip-bg: #030304; /* identical to the Hero's bottom colour: no seam */
+  --n: 6;
+
+  /* < 744px: 390 → 744 */
+  --card-w: calc(66.9px + (100vw - 390px) * 0.0551);
+  --card-h: calc(79px + (100vw - 390px) * 0.0636);
+  --pitch: calc(87.7px + (100vw - 390px) * 0.0723);
+  --fade: calc(79.3px + (100vw - 390px) * 0.0653);
+  --pad-top: calc(24.6px + (100vw - 390px) * 0.0235);
+  --row-gap: calc(22.1px - (100vw - 390px) * 0.0034);
+  --pad-bottom: calc(97px + (100vw - 390px) * 0.011);
+  --title-fs: calc(13.9px + (100vw - 390px) * 0.01157);
+  --title-lh: calc(16px + (100vw - 390px) * 0.0113);
+  --dur: 15s;
+
+  padding: var(--pad-top) 0 var(--pad-bottom);
+  overflow: hidden;
+  background-color: var(--strip-bg);
+  color: #f5f5f5;
+}
+
+.trust__title {
+  margin: 0 0 var(--row-gap);
+  padding-inline: 1rem;
+  text-align: center;
+  font-size: var(--title-fs);
+  font-weight: 400;
+  line-height: var(--title-lh);
+  color: #9e9ea0;
+}
+
+/* ---------- marquee ---------- */
+
+.trust__viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--fade),
+    #000 calc(100% - var(--fade)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--fade),
+    #000 calc(100% - var(--fade)),
+    transparent
+  );
+}
+
+.trust__track {
+  display: flex;
+  width: max-content;
+  opacity: 0.7; /* design: the whole logo row is at 70% */
+}
+
+.trust__group {
+  display: flex;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trust__item {
+  display: flex;
+  flex: none;
+  justify-content: center;
+  width: var(--pitch);
+}
+
+@keyframes trust-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(var(--n) * var(--pitch)));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trust__track {
+    will-change: transform;
+    animation: trust-marquee var(--dur) linear infinite;
+  }
+
+  /* Pointer users can hold the row still to read it. */
+  .trust__viewport:hover .trust__track {
+    animation-play-state: paused;
+  }
+}
+
+/* Reduced motion: no movement; only the first group, wrapped and centred, so
+   nothing is clipped or needs scrolling. */
+@media (prefers-reduced-motion: reduce) {
+  .trust__track {
+    width: auto;
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .trust__group {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding-inline: 1rem;
+    row-gap: 1rem;
+  }
+
+  .trust__group:not(:first-child) {
+    display: none;
+  }
+
+  .trust__viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* ---------- card (< 1280px): logo + caption inside a white rounded card ---------- */
+
+.trust__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--card-w);
+  min-height: var(--card-h); /* grows if a caption needs more lines */
+  padding-top: calc(var(--card-w) * 0.2222);
+  border-radius: calc(var(--card-w) * 0.1185);
+  background-color: #fff;
+  color: #0f0f0f;
+}
+
+.trust__logo {
+  display: block;
+  width: calc(var(--card-w) * 0.3556);
+  height: calc(var(--card-w) * 0.3556);
+}
+
+.trust__logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+}
+
+.trust__caption {
+  max-width: calc(var(--card-w) * 0.9);
+  margin-top: calc(var(--card-w) * 0.14);
+  /* The reference scales captions down to ~6-9px on small screens; 10px is
+     the smallest size kept readable (documented deviation). */
+  font-size: max(10px, calc(var(--card-w) * 0.0926));
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* ---------- 744 → 1023: tablet cards ---------- */
+
+@media (min-width: 46.5rem) {
+  .trust {
+    --card-w: calc(86.4px + (100vw - 744px) * 0.0343);
+    --card-h: calc(101.5px + (100vw - 744px) * 0.0411);
+    --pitch: calc(113.3px + (100vw - 744px) * 0.0446);
+    --fade: calc(102.4px + (100vw - 744px) * 0.0407);
+    --pad-top: calc(32.5px + (100vw - 744px) * 0.0139);
+    --row-gap: calc(23px + (100vw - 744px) * 0.0104);
+    --pad-bottom: calc(100.9px + (100vw - 744px) * 0.1146);
+    --title-fs: 18px;
+    --title-lh: 20px;
+    --dur: 19.5s;
+  }
+}
+
+/* ---------- 1024 → 1279: card layout frozen at the 1024 reference ---------- */
+
+@media (min-width: 64rem) {
+  .trust {
+    --card-w: 96px;
+    --card-h: 113px;
+    --pitch: 125.9px;
+    --fade: 113.8px;
+    --pad-top: 36.4px;
+    --row-gap: 25.9px;
+    --pad-bottom: 133.5px;
+    --dur: 21.5s;
+  }
+}
+
+/* ---------- ≥ 1280: tiles with the caption below (1440 reference) ---------- */
+
+@media (min-width: 80rem) {
+  .trust {
+    --pitch: 177px;
+    --fade: 160px;
+    --pad-top: 52.3px;
+    --row-gap: 61.7px;
+    --pad-bottom: 183px;
+    --dur: 30s;
+  }
+
+  .trust__card {
+    width: auto;
+    min-height: 0;
+    padding-top: 0;
+    border-radius: 0;
+    background: none;
+    color: #f5f5f5;
+  }
+
+  .trust__logo {
+    display: grid;
+    place-items: center;
+    width: 87px;
+    height: 60px;
+    border-radius: 14px;
+    background-color: #f5f5f5;
+  }
+
+  .trust__logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .trust__caption {
+    max-width: 100px;
+    margin-top: 14px;
+    font-size: 12.5px;
+    line-height: 20px;
+  }
+}

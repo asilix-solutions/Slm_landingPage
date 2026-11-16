@@ -1,0 +1,69 @@
+{
+  "phase": "06",
+  "title": "Amanix Pricing Plans",
+  "sources": {
+    "pricing-section-full-1440x931.svg": {
+      "original_filename": "Section (1).svg",
+      "svg_width": "1440",
+      "svg_height": "931",
+      "viewBox": "0 0 1440 931",
+      "bytes": 900028,
+      "sha256": "a6fe50404f0ddb44cc2d0845f253ab6a54b3de7a5e4422cf19970fa97d4bb58b",
+      "embedded_raster": {
+        "format": "png",
+        "pixel_width": 1440,
+        "pixel_height": 870,
+        "sha256": "afac30aaf4691cd395e8c144ed977169c992733db96f3072489134abb3554f38",
+        "bytes": 112567
+      }
+    },
+    "pricing-background-updated-1440x756.svg": {
+      "original_filename": "Background-updated 1.svg",
+      "svg_width": "1440",
+      "svg_height": "756",
+      "viewBox": "0 0 1440 756",
+      "bytes": 150765,
+      "sha256": "4c4fc5ab465340e05e88e323b87d242be006b7b7041d5353239804da806e91f0",
+      "embedded_raster": {
+        "format": "png",
+        "pixel_width": 1440,
+        "pixel_height": 870,
+        "sha256": "afac30aaf4691cd395e8c144ed977169c992733db96f3072489134abb3554f38",
+        "bytes": 112567
+      }
+    },
+    "pricing-background-vector-export-1440x756.svg": {
+      "original_filename": "Vector (2).svg",
+      "svg_width": "1440",
+      "svg_height": "756",
+      "viewBox": "0 0 1440 756",
+      "bytes": 150631,
+      "sha256": "88471877fae7acddc7b16f24b8e6db82aa9c7788a98f37d381891288fd5f0188",
+      "embedded_raster": {
+        "format": "png",
+        "pixel_width": 1440,
+        "pixel_height": 870,
+        "sha256": "afac30aaf4691cd395e8c144ed977169c992733db96f3072489134abb3554f38",
+        "bytes": 112567
+      }
+    }
+  },
+  "rendered_asset": {
+    "path": "public/images/pricing/pricing-wave.svg",
+    "selected_from": "Background-updated 1.svg",
+    "description": "Visible full-background Figma source, includes embedded 1440x870 PNG; NOT a pure vector curve",
+    "dimensions": "1440×756",
+    "bytes": 150765,
+    "sha256": "4c4fc5ab465340e05e88e323b87d242be006b7b7041d5353239804da806e91f0"
+  },
+  "reference": {
+    "full_section": "design-reference/assets/phase-06/pricing/original-exports/pricing-section-full-1440x931.svg",
+    "figma_screenshot": "design-reference/notes/phase-06/pricing/figma-pricing-screenshot.png"
+  },
+  "notes": [
+    "The two exported background SVGs embed the exact same 1440x870 RGB PNG. They differ in wrapper structure, not in underlying pixels.",
+    "The full-section SVG includes design content outlines and the background; never use it as webpage markup.",
+    "The pink columns in the Figma screenshot are editor layout guides, not real design fills.",
+    "Pricing figures and feature statements are visible design copy but not confirmed commercial terms."
+  ]
+}

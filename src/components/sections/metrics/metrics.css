@@ -1,0 +1,167 @@
+/*
+ * Metrics band — Figma reference: 1440 x 474, full-bleed dark photo (62% black overlay already baked
+ * into the supplied image: do NOT add another), four centred indicators with hairline dividers,
+ * visual order right to left: 8 | 100% | SBC 801 | ZATCA.
+ * Measured (screenshot scale ~0.776): number cap ~57px => ~64px type; description 2 lines, ~16px /
+ * 26px; block vertically centred in the 474px band; items ~40px side padding.
+ */
+
+.metrics {
+  --metrics-gutter: clamp(1rem, 5.6vw, 5rem);
+  --metrics-pad-y: 64px;
+  --metrics-bg: #12141b; /* ~ the photo's average tone: no visible seam if the pin strip shows */
+
+  position: relative;
+  isolation: isolate;
+  /* `clip`: no scroll container is created. */
+  overflow: clip;
+  color: #fff;
+  background-color: var(--metrics-bg);
+}
+
+/*
+ * STATIC mode (default, also reduced motion / very narrow / very short viewports): the photo fills the
+ * section behind normal-flow content, exactly like the first implementation.
+ */
+.metrics__pin {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  /* Fallback for clean clones / failed image: dark, slightly warm, like the photo's tone. */
+  background-color: #0f0c16;
+  background-image:
+    radial-gradient(70% 90% at 75% 20%, rgb(120 30 40 / 0.35), transparent 70%),
+    linear-gradient(160deg, #0b0d1a 0%, #1a0f17 55%, #120a10 100%);
+}
+
+.metrics__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* never stretched; the full 2400x1200 source is kept, cover only crops */
+  object-position: center;
+}
+
+.metrics__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: var(--metrics-pad-y) var(--metrics-gutter);
+}
+
+.metrics__list-wrap {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.metrics__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px 16px;
+  margin: 0;
+}
+
+.metrics__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  text-align: center;
+}
+
+.metrics__value {
+  margin: 0;
+  font-size: clamp(2.25rem, 10vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.metrics__desc {
+  max-width: 12.5rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.92);
+  text-wrap: balance;
+}
+
+/* Very narrow phones: one indicator per row. */
+@media (max-width: 21.24rem) {
+  .metrics__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 46.5rem) {
+  .metrics {
+    --metrics-pad-y: 80px;
+  }
+
+  .metrics__list {
+    gap: 56px 24px;
+  }
+}
+
+/* Four in a row; the hairline dividers sit between items (RTL: the item's inline-end = its left). */
+@media (min-width: 64rem) {
+  .metrics {
+    --metrics-pad-y: 96px;
+  }
+
+  .metrics__inner {
+    min-height: 474px;
+  }
+
+  .metrics__list {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .metrics__item {
+    flex: 0 1 auto;
+    padding-inline: clamp(16px, 2.8vw, 40px);
+  }
+
+  .metrics__item:not(:last-child) {
+    border-inline-end: 1px solid rgb(255 255 255 / 0.18);
+  }
+
+  .metrics__value {
+    font-size: clamp(2.5rem, 5.2vw, 4rem);
+  }
+}
+
+/*
+ * PINNED-BACKGROUND effect inside the compact section (no extra height, no runway).
+ *
+ * Technique: the section clips (`clip-path: inset(0)`) a viewport-sized `position: fixed` photo layer.
+ * The photo therefore stays stationary relative to the viewport while the section (and its content)
+ * scrolls over it: the section is a window onto a fixed picture. Pure CSS, no JS, no listener, no
+ * sticky wrapper, no extra scroll distance; the section keeps its content-driven height (474px at the
+ * 1440 reference). `clip-path` does not create a containing block for fixed descendants (unlike
+ * transform/filter/contain), so the fixed layer stays viewport-anchored.
+ *
+ * Only where it is reliable: fine pointers (desktop browsers), no reduced-motion preference and a
+ * usable viewport. Phones/tablets (coarse pointer: toolbar resizing makes viewport-fixed layers jitter,
+ * and iOS ignores background-attachment) and reduced-motion get the static layout above.
+ */
+@media (pointer: fine) and (min-width: 21.25rem) and (min-height: 30rem) and (prefers-reduced-motion: no-preference) {
+  .metrics {
+    clip-path: inset(0);
+  }
+
+  .metrics__pin {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+}

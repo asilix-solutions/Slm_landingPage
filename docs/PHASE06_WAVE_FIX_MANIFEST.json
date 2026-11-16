@@ -1,0 +1,64 @@
+{
+  "package": "AMANIX Phase06 wave fidelity fix",
+  "date": "2026-11-14",
+  "reconstructed_vector_has_embedded_raster": false,
+  "originals_are_bitmap_wrappers": true,
+  "original_and_vector_mean_abs_rgb_diff_at_1440x756": 1.785,
+  "files": [
+    {
+      "path": "README_START_HERE_AR.md",
+      "size_bytes": 3026,
+      "sha256": "7a674d546dbbcce836d9fddbda75403463d884bee2dd1ef1a679b10baa022932"
+    },
+    {
+      "path": "design-reference/assets/phase-06/pricing/quality-fix/original-background-raster-wrapper.svg",
+      "size_bytes": 150765,
+      "sha256": "4c4fc5ab465340e05e88e323b87d242be006b7b7041d5353239804da806e91f0"
+    },
+    {
+      "path": "design-reference/assets/phase-06/pricing/quality-fix/original-vector-export-raster-wrapper.svg",
+      "size_bytes": 150631,
+      "sha256": "88471877fae7acddc7b16f24b8e6db82aa9c7788a98f37d381891288fd5f0188"
+    },
+    {
+      "path": "design-reference/notes/phase-06/pricing/quality-fix/original-reference-preview.png",
+      "size_bytes": 102061,
+      "sha256": "9d93abb7043e3134d78257b03c9fcef31fa61a0f16834d47f3cb3145eff2a0f5"
+    },
+    {
+      "path": "design-reference/notes/phase-06/pricing/quality-fix/side-by-side-comparison.jpg",
+      "size_bytes": 32633,
+      "sha256": "d0e7339e5f7c7269aacc9bace33a2fc579c822ea04ba7a030420e8defbbafed3"
+    },
+    {
+      "path": "design-reference/notes/phase-06/pricing/quality-fix/true-vector-preview-white.png",
+      "size_bytes": 30007,
+      "sha256": "66561bcb13a599edfd013b17d13fc685a82164cbd12dd9f8b70fbd84ee4baf85"
+    },
+    {
+      "path": "docs/PHASE06_WAVE_FIX_CLAUDE_PROMPT.md",
+      "size_bytes": 3746,
+      "sha256": "35abea4dee70c461d8b98a61104b01a6e13fdb8ac248bd33c0ff223da47ec60e"
+    },
+    {
+      "path": "docs/PHASE06_WAVE_QUALITY_SPEC.md",
+      "size_bytes": 2542,
+      "sha256": "bc92cb63ef09b01e1cbe26ef12c55b6fc429b5df12511f5be7ae95d6847bca7a"
+    },
+    {
+      "path": "public/images/pricing/pricing-wave-reference-1440.webp",
+      "size_bytes": 28002,
+      "sha256": "6211bb7792483262197bf55aff420d8cdeb83a995f503111dbef7f39569d9095"
+    },
+    {
+      "path": "public/images/pricing/pricing-wave-true-vector.svg",
+      "size_bytes": 15614,
+      "sha256": "a1d035b16e28725ee127442b3db90ed518b9b6ace0073fd46fafa9f571b3480f"
+    },
+    {
+      "path": "public/images/pricing/pricing-wave-vector-2x.webp",
+      "size_bytes": 57898,
+      "sha256": "2180c67c3dd34b02aea6e54573011708e770a0a0d3fd8bf1ab4468a545fcb4b8"
+    }
+  ]
+}

@@ -27,3 +27,73 @@ Inspected programmatically (SVG root size, embedded raster type/pixels, `<text>`
 
 ## Missing / requested
 Design tokens; original Arabic copy for all sections; brand favicon/app icons; icons for workflow/features; confirmation of section ownership for the three unconfirmed images; optimized photo originals (optional — extraction is possible).
+
+## Production assets created (Hero slice, 2026-11-12)
+| Public path | Source | Notes |
+|---|---|---|
+| `public/images/hero/hero-office.jpg` | PNG 1824×862 embedded in `Fire Safety Office Professional 1.svg` | Mirrored (as in all four references), JPEG q84 mozjpeg, 165 KB; `next/image` serves 26–96 KB responsive variants |
+| `public/images/hero/card-matched-candidates.svg` | `Main - MatchedTalentWidget.svg` | Unmodified, 55 KB, 283×231 |
+| `public/images/hero/card-contractor-profile.svg` | `Outer Card Shell.svg` | Unmodified, 113 KB, 329×170 |
+| `public/brand/logo-on-dark.svg` | `Property 1=Variant2.svg` | Unmodified (orange symbol + light lettering) |
+| `public/brand/logo-on-light.svg` | `Property 1=Default.svg` | Unmodified |
+
+## Trust strip assets (Phase 03A)
+| Public path | Source (design-reference/assets/phase-03/trust-strip/logos/) | Notes |
+|---|---|---|
+| public/images/trust-strip/ul.webp | UL Listed Products.svg | lossless WebP from the embedded 210x277 PNG, 109x144 |
+| public/images/trust-strip/nfpa.webp | NFPA Member.svg | embedded raster only 58x61 (soft when scaled up) |
+| public/images/trust-strip/industrial-security.webp | Industrial Security.svg | embedded 914x998 PNG (599 KB) reduced to 132x144, 17 KB |
+| public/images/trust-strip/saso.webp | SASO Compliance.svg | 86x144 |
+| public/images/trust-strip/iso-9001.webp | ISO 9001 Certified.svg | 144x140 |
+| public/images/trust-strip/gcc-lab.webp | GCC Lab Tested.svg | 144x72 |
+
+MISSING (not supplied, not drawn): FM Approved, Civil Defense. Rights and claims for all marks are unverified — see the Phase 03A section of DECISIONS_AND_OPEN_ITEMS.md.
+
+## Dark intro region (Phase 03A, 2026-11-13)
+`.dark-intro` (src/app/page.tsx) wraps Hero + TrustStrip and owns `<HeroBoundary />`; the header turns white only near the end of that combined region. TrustStrip is a CSS-only marquee (5 identical groups, translate by one group) with a reduced-motion fallback of a single wrapped group. See T01–T06 in DECISIONS_AND_OPEN_ITEMS.md.
+
+## Safety needs assets (Phase 03B)
+| Public path | Source | Use |
+|---|---|---|
+| public/images/safety-needs/background-mark.svg | design-reference/assets/phase-03/safety-needs/originals/slm-logo-2.svg (the duplicate in duplicates/ is byte-identical and is not rendered) | decorative background mark, unmodified |
+| public/images/safety-needs/icon-document-search.svg | .../originals/vector-1-document-search.svg | card 8 (نماذج طلبات ديناميكية) only |
+
+MISSING: note-edit icon (cards 1-6) and shield-lock icon (card 7) — not supplied, not drawn. design-reference/assets/phase-03/safety-needs/feature-icons/ is empty.
+
+## Solutions carousel assets (Phase 03C)
+No images were supplied (design-reference/assets/phase-03/solutions-carousel/ holds only README_ASSETS.md). Nothing was cropped from the Figma screenshot or sourced elsewhere. public/images/solutions-carousel/ is intentionally not created yet.
+
+## Solutions carousel (Phase 03C, 2026-11-13)
+sections/solutions/: SolutionsCarousel.tsx (server, native scroll-snap scroller), SolutionCard.tsx (server), SolutionsCarouselControls.tsx (client: buttons + progress mirror), solutions.css; data in src/content/solutions.ts. See C01-C07 in DECISIONS_AND_OPEN_ITEMS.md.
+
+## Solutions carousel images (2026-11-13)
+Production: public/images/solutions-carousel/{01,02,03,05}-*.webp (810x546, from the supplied SVG exports, unmodified art). Sources: design-reference/assets/phase-03/solutions-carousel/source-exports/ (4 unique SVGs; the two byte-identical DUPLICATE exports were not copied). 05-fire-extinguisher-gauge is unused. Third-party branding (SAFEQUEST) visible in 02 — rights unverified.
+
+NOTE (2026-11-14): the carousel photos listed above are local-only and git-ignored; see docs/SOLUTIONS_LOCAL_IMAGES.md.
+
+- public/images/project-control/request-intake.webp — 1470x792, 67 KB, LOCAL ONLY (git-ignored, rights unverified); cropped from the supplied SVG in design-reference/assets/project-control/ (also git-ignored, preserved). Not referenced by tracked content: panel 1 renders a placeholder. See docs/PROJECT_CONTROL_LOCAL_IMAGE.md.
+
+- Phase 05 (handoff 2026-11-14, see docs/PHASE05_ASSET_MANIFEST.json): metrics-background-local-preview.webp (1440x474, 26 KB) copied to public/images/metrics/metrics-background.webp — LOCAL ONLY, git-ignored, rights unverified, source SVG kept. faq-layout-reference.svg and the two Figma PNG notes are reference only (PNGs git-ignored); fullpage-end-of-body-reference.svg (13 MB) stays ignored under design-reference/screens/.
+
+- Phase 06 (handoff Amanix_Phase06_Pricing_Handoff_2026-11-14.zip, integrity OK, 10 entries, no unsafe paths, no conflicts, hashes match docs/PHASE06_ASSET_MANIFEST.json): public/images/pricing/pricing-wave.svg (150,765 B, sha256 4c4fc5ab…91f0, 1440x756 SVG wrapper around an embedded 1440x870 PNG — NOT a pure vector; used unmodified); design-reference/assets/phase-06/pricing/original-exports/ (3 SVG sources, incl. the 900 KB full-section SVG: design evidence only) and design-reference/notes/phase-06/pricing/ (Figma screenshot + previews). All of these are git-ignored/local-only (distribution rights unverified); only docs/PHASE06_* are committed.
+
+- Phase 06 wave quality fix (Amanix_Phase06_Wave_Quality_Fix_2026-11-14.zip, integrity OK, 11 entries, no conflicts, sha256 match its manifest): PRODUCTION wave is now public/images/pricing/pricing-wave-true-vector.svg (15,614 B, sha256 a1d035b1…480f, no embedded bitmap). The old raster wrapper pricing-wave.svg (150,765 B) was removed from public/ (identical copy kept in design-reference/assets/phase-06/pricing/original-exports/). Alternatives kept local-only in design-reference/assets/phase-06/pricing/quality-fix/: pricing-wave-vector-2x.webp (57,898 B, 2880x1512, a raster render of the same vector: not used), pricing-wave-reference-1440.webp (28,002 B, 1440x756 re-encode of the original raster: not used), the two original raster wrappers and comparison previews (design-reference/notes/phase-06/pricing/quality-fix/). All git-ignored (rights unverified; the vector is a derivative of the original artwork).
+
+- Phase 07C (Amanix_Phase07C_QnA_Handoff_2026-11-14.zip, integrity OK, 13 entries, no unsafe paths, no conflicts, sha256 match docs/PHASE07C_ASSET_MANIFEST.json): public/images/qna/dashboard-screenshot-lossless.webp (43,224 B, 1352x768 lossless, sha256 6ac1106c…; derived from the 104 KB PNG embedded in the supplied SVGs; shows another company's dashboard/branding, so rights and authenticity are UNVERIFIED) — used via next/image unoptimized, displayed at 368x209 on desktop. The 10x12 diamond vector (qna-diamond.svg) is inlined in QnaCenter.tsx (same path); its file was moved out of public/ (copy kept in design-reference/assets/phase-07c/qna/source-exports/). Source SVG/PNG exports and Figma/rendered previews live under design-reference/assets/phase-07c/ and design-reference/notes/phase-07c/. All local-only/git-ignored; only docs/PHASE07C_* are committable.
+
+## Phase 08 footer assets
+Merged from `Amanix_Phase08_Footer_Handoff_2026-11-14.zip` (integrity OK, no unsafe paths; files copied without overwriting). Package `public/` SVGs are byte-identical to the source exports (sha256 in `docs/PHASE08_FOOTER_ASSET_MANIFEST.json`), so no duplicates were created.
+- `public/brand/footer-logo-white.svg` (594x229; differs from `logo-on-dark.svg`, which is the orange/white header variant, so both are kept)
+- `public/images/footer/footer-decorative-slm.svg` (209x423), `social-{facebook,linkedin,x,youtube,instagram}.svg` (24x24)
+- References (not served): `design-reference/assets/phase-08/`, `design-reference/notes/phase-08/`
+All vector, served `unoptimized` (never rasterised). Social glyphs are third-party marks used decoratively; no rights review recorded.
+
+## Phase 09A — Hero photo re-encode
+- Highest-quality original: the PNG 1824x862 (1.7 MB, lossless, carries embedded C2PA/content-credentials metadata) inside `design-reference/assets/inbox/Fire Safety Office Professional 1.svg`. The SVG wraps only that one raster, so **1824x862 is the maximum real resolution available**.
+- Previous chain: PNG -> mirrored JPEG q84 (`hero-office.jpg`, 161 KB, 43.8 dB vs the PNG) -> `next/image` default optimizer WebP **q75, 57 KB, 39.1 dB** (every requested width >=1824 returned the same 1824x862 file). The second lossy pass was the weakest link.
+- New: `public/images/hero/hero-office.webp` = mirrored PNG -> WebP q93 method 6, **142 KB, 44.2 dB**, edge-energy 289 vs 288 in the source (no sharpening). Served with `unoptimized` (no re-encode). Comparison: q92 126 KB/43.7 dB, q94 159 KB/44.4, lossless 1.2 MB, AVIF q85 109 KB/44.0 dB but softer (edge-energy 280), double-lossy JPEG->WebP q90 41.5 dB.
+- `hero-office.jpg` is now unreferenced (kept, not deleted; remove in a later cleanup if approved). Tracked in git like the old file, so fresh clones have no broken reference.
+- Remaining limit: at 1920x1080 the cover scale is ~1.25x the source (2.5x at DPR 2), and at 1440x900 ~1.04x (2.1x at DPR 2), so large/Retina screens still upscale. Real fix needs an approved original of at least 2880x1360 (1440 @2x), ideally 3840x1815.
+
+## Phase 09B — Solutions carousel photos restored (local-only)
+`public/images/solutions-carousel/{01,02,03}-*.webp` (810x546 WebP, 24/22/13 KB, red treatment baked in) are present locally and git-ignored; they were never deleted. `src/content/solutions.ts` references them again; rendering is guarded by a server-side existence check (see SOLUTIONS_LOCAL_IMAGES.md). Served `unoptimized` (already 2x of the 405x273 card, so no upscaling and no re-encode). SHA-256 of the files verified unchanged after the fallback test. Rights remain unverified (02 shows third-party SAFEQUEST branding).

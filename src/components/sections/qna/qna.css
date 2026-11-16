@@ -1,0 +1,217 @@
+/*
+ * Q&A Center — measured from the Figma export (design-reference/assets/phase-07c/qna/source-exports/
+ * faq-qna-section-reference-1440x1019.svg, 1440 x 1019, field #FEFEFE):
+ *
+ *   eyebrow ~y218 (14px), heading ~y265, subtitle 2 lines ~y314/343 (#737373, 20px, centred, ~480px wide)
+ *   list x 520..1360 (RTL start = right), rows ~67px, row 2 open: question y551, answer 3 lines 24px
+ *   media frame x 80.5 y 452.5, 406 x 325, radius 13.5, fill #F5F5F5, 1px #E5E5E5; screenshot 369 x 209
+ *   centred in it; four 10x12 diamonds 18.5px from the frame corners
+ *   section: ~207px above the eyebrow and ~209px below the last row (white-on-#FEFEFE surface)
+ *
+ * Desktop reference values only: below 64rem the media stacks under the list and spacing shrinks.
+ */
+
+.qna {
+  --qna-bg: #fefefe;
+  --qna-ink: #0a0a0a;
+  --qna-muted: #737373;
+  --qna-line: #e5e5e5;
+  --qna-frame: #f5f5f5;
+  --qna-gutter: clamp(1rem, 5.6vw, 5rem);
+  --qna-pt: 64px;
+  --qna-pb: 72px;
+
+  padding: var(--qna-pt) var(--qna-gutter) var(--qna-pb);
+  background-color: var(--qna-bg);
+  color: var(--qna-ink);
+}
+
+.qna__inner {
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+/* ---------- heading block ---------- */
+
+.qna__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.qna__eyebrow {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4286;
+}
+
+.qna__title {
+  margin: 17px 0 0;
+  font-size: clamp(1.5rem, 1.1rem + 1.25vw, 2rem); /* 32px at 1440: glyph width ~480px as in the design */
+  font-weight: 700;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.qna__subtitle {
+  max-width: 30rem;
+  margin: 14px 0 0;
+  font-size: clamp(1rem, 0.9rem + 0.45vw, 1.25rem);
+  line-height: 1.45;
+  color: var(--qna-muted);
+  text-wrap: pretty;
+}
+
+/* ---------- body: list (DOM first => right in RTL) + media ---------- */
+
+.qna__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.qna__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.qna__row {
+  padding-block: 19.5px; /* rows ~67px as in the design */
+  border-bottom: 1px solid var(--qna-line);
+}
+
+.qna__row:last-child {
+  border-bottom: 0;
+}
+
+.qna__row-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between; /* question at the RTL start, chevron at the far (left) end */
+  gap: 16px;
+}
+
+.qna__question {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 0.9375rem; /* design text width implies ~15px in Noto Sans Arabic */
+  font-weight: 500;
+  line-height: 1.8; /* 27px */
+  text-wrap: pretty;
+}
+
+/* Decorative only: no cursor, hover or focus styling. */
+.qna__chevron {
+  flex: none;
+  margin-top: 5.5px;
+  color: var(--qna-muted);
+}
+
+.qna__answer {
+  max-width: 26rem;
+  margin: 20px 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--qna-muted);
+}
+
+/* ---------- media frame ---------- */
+
+.qna__media {
+  position: relative;
+  /* The screenshot is a grid item centred on both axes of the frame; the diamonds are absolutely
+     positioned (out of flow), so they can never influence its position. */
+  display: grid;
+  place-items: center;
+  align-self: start;
+  width: 100%;
+  max-width: 25.375rem; /* 406px */
+  margin-inline: auto;
+  aspect-ratio: 406 / 325;
+  border: 1px solid var(--qna-line);
+  border-radius: 14px;
+  background-color: var(--qna-frame);
+  overflow: hidden;
+}
+
+/* Reference: 369 x 209 in a 406 x 325 frame => 18.5px / 58px margins; the SVG crops the picture with
+   8px bottom corners. Width is proportional to the frame, height follows the 1352:768 aspect (never
+   enlarged to fill, never cropped). */
+.qna__img {
+  display: block;
+  width: 91.34%; /* 369 / 404 (frame padding box) */
+  height: auto;
+  max-width: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.qna__diamond {
+  position: absolute;
+  z-index: 1;
+  width: 10px;
+  height: 12px;
+}
+
+.qna__diamond--tl,
+.qna__diamond--tr {
+  top: 17.5px; /* 18.5 from the frame edge, minus the 1px border */
+}
+
+.qna__diamond--bl,
+.qna__diamond--br {
+  bottom: 17.5px;
+}
+
+/* physical sides: the artwork is symmetric and not direction-dependent */
+.qna__diamond--tl,
+.qna__diamond--bl {
+  left: 17.5px;
+}
+
+.qna__diamond--tr,
+.qna__diamond--br {
+  right: 17.5px;
+}
+
+/* ---------- breakpoints ---------- */
+
+@media (min-width: 48rem) {
+  .qna {
+    --qna-pt: 96px;
+    --qna-pb: 112px;
+  }
+
+  .qna__body {
+    margin-top: 56px;
+  }
+
+}
+
+@media (min-width: 64rem) {
+  .qna__body {
+    grid-template-columns: minmax(0, 840fr) minmax(0, 407fr);
+    gap: clamp(24px, 2.3vw, 33px);
+    align-items: start;
+    margin-top: 80px;
+  }
+
+  .qna__media {
+    margin-inline: 0;
+  }
+}
+
+@media (min-width: 80rem) {
+  .qna {
+    --qna-pt: 208px;
+    --qna-pb: 209px;
+  }
+
+  .qna__body {
+    margin-top: 95px;
+  }
+}

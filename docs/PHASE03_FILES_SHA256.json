@@ -1,0 +1,72 @@
+[
+  {
+    "path": "design-reference/assets/phase-03/safety-needs/duplicates/slm-logo-2-copy-identical.svg",
+    "size_bytes": 11966,
+    "sha256": "a7f77297181c65907104165b3112c194b47704841a31286e608b0996a4e37ff2"
+  },
+  {
+    "path": "design-reference/assets/phase-03/safety-needs/originals/slm-logo-2.svg",
+    "size_bytes": 11966,
+    "sha256": "a7f77297181c65907104165b3112c194b47704841a31286e608b0996a4e37ff2"
+  },
+  {
+    "path": "design-reference/assets/phase-03/safety-needs/originals/vector-1-document-search.svg",
+    "size_bytes": 1412,
+    "sha256": "093a4d4377bb06561635078ee9a46b920c4cf90fb9dd0174920aefd94c52ec29"
+  },
+  {
+    "path": "design-reference/notes/phase-03/safety-needs-card-measurements.png",
+    "size_bytes": 71680,
+    "sha256": "6f31bdfc7c93a21cc6d6ff1d367500ca4f14d5864813fc2f55d0d915c919aa32"
+  },
+  {
+    "path": "design-reference/notes/phase-03/safety-needs-full-figma-capture.png",
+    "size_bytes": 108069,
+    "sha256": "f7503529c13b82f6e286232741761928efff8d15101ed9eb24285f51803e312e"
+  },
+  {
+    "path": "design-reference/notes/phase-03/safety-needs-visual-crop.png",
+    "size_bytes": 58986,
+    "sha256": "dc6634d736bc642bb02e9a1a1da1c9a16eb08905965ba99a52f5fc727b5d7d7c"
+  },
+  {
+    "path": "design-reference/notes/phase-03/trust-strip-full-figma-capture.png",
+    "size_bytes": 128071,
+    "sha256": "749d1a7782821ba012964e7f85303dcdd37bb21b91c343b2be64b43c3684ade2"
+  },
+  {
+    "path": "design-reference/notes/phase-03/trust-strip-visual-crop.png",
+    "size_bytes": 43420,
+    "sha256": "3f029c17e49d35d60109a8dcf45bd26e993c6a836ad5858213822c0f01483cb5"
+  },
+  {
+    "path": "docs/PHASE03_ASSET_MANIFEST.md",
+    "size_bytes": 4011,
+    "sha256": "77e9e531f5a6128be67067c87883a0fd4b3aa2bed664bfb384698b5a0a3a27bb"
+  },
+  {
+    "path": "docs/PHASE03_CLAUDE_PROMPTS.md",
+    "size_bytes": 6738,
+    "sha256": "659efc5646af16daee2835368d2aebf9e7ebef2e2aa605dd2c8df0ae29d08a23"
+  },
+  {
+    "path": "docs/PHASE03_START_HERE_AR.md",
+    "size_bytes": 5228,
+    "sha256": "d7012e62a417c5a4a404ef5d4486c800a1ff6f5498aaf3009206f1cb068dde74"
+  },
+  {
+    "path": "docs/PHASE03_VISUAL_BEHAVIOR_SPEC.md",
+    "size_bytes": 5349,
+    "sha256": "faac799598602cab03a11b864af23b404c2e55d17def464e22419f03849fc5a0"
+  },
+  {
+    "path": "public/images/safety-needs/background-mark.svg",
+    "size_bytes": 11966,
+    "sha256": "a7f77297181c65907104165b3112c194b47704841a31286e608b0996a4e37ff2"
+  },
+  {
+    "path": "public/images/safety-needs/icon-document-search.svg",
+    "size_bytes": 1412,
+    "sha256": "093a4d4377bb06561635078ee9a46b920c4cf90fb9dd0174920aefd94c52ec29"
+  }
+]

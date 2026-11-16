@@ -1,0 +1,42 @@
+{
+  "phase": "05",
+  "assets": [
+    {
+      "path": "design-reference/assets/phase-05/metrics/metrics-background-source.svg",
+      "bytes": 420428,
+      "sha256": "971c0795a36d5f0bfc237bda0e0102cea070fe40d6c7aabdab3ce3d8da4d4471",
+      "usage": "SOURCE_LOCAL_ONLY_PENDING_RIGHTS"
+    },
+    {
+      "path": "design-reference/assets/phase-05/metrics/metrics-background-local-preview.webp",
+      "bytes": 26770,
+      "sha256": "b1324bf6c79bc07ccf405e73aca81845a00eacbaddf896fffe379118ec9c3640",
+      "usage": "SOURCE_LOCAL_ONLY_PENDING_RIGHTS"
+    },
+    {
+      "path": "design-reference/assets/phase-05/faq/faq-layout-reference.svg",
+      "bytes": 171490,
+      "sha256": "a9fd85b4ecb3b2f4eeded90b1cdbbe7ee8130cf1143493fdb3eba8043205464b",
+      "usage": "REFERENCE_ONLY"
+    },
+    {
+      "path": "design-reference/notes/phase-05/figma-metrics-and-faq-overview.png",
+      "bytes": 577762,
+      "sha256": "27be1624d529f7d879e93f4fd3896d4dbba99851cdf7efae98d09522a73ef2b3",
+      "usage": "REFERENCE_ONLY"
+    },
+    {
+      "path": "design-reference/notes/phase-05/figma-faq-layout-detail.png",
+      "bytes": 607381,
+      "sha256": "6f0a41eb2fa49ee42c8cf8fea126e78ebf9925902397f460fb3239c55bcbe891",
+      "usage": "REFERENCE_ONLY"
+    },
+    {
+      "path": "design-reference/screens/phase-05/fullpage-end-of-body-reference.svg",
+      "bytes": 12603877,
+      "sha256": "e51cbfbcfb6f44bedace9724d1b6fdc8828e919462ed5d777fa0cf5c277c3d62",
+      "usage": "REFERENCE_ONLY"
+    }
+  ],
+  "note": "Do not commit fullpage export or unverified images to public GitHub repository."
+}

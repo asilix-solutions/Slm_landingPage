@@ -1,0 +1,100 @@
+{
+  "package": "AMANIX_PHASE07C_QNA_HANDOFF",
+  "created": "2026-11-14",
+  "source_section": {
+    "frame_px": [
+      1440,
+      1019
+    ],
+    "background": "#FEFEFE",
+    "dashboard_frame": {
+      "x": 80.5,
+      "y": 452.5,
+      "width": 406,
+      "height": 325,
+      "radius": 13.5
+    }
+  },
+  "bitmap_details": {
+    "source_pixel_dimensions": [
+      1352,
+      768
+    ],
+    "original_png_sha256": "71d5699da480624922adaa7337dc45f616f257fcec1b4c38723c77bf01443f4f",
+    "shared_by": "FAQ (6).svg and Screenshot 2026-10-29 105409 1.svg",
+    "webp_conversion": "lossless",
+    "rights": "unverified"
+  },
+  "vector_icon": {
+    "px": [
+      10,
+      12
+    ],
+    "contains_raster": false
+  },
+  "number_of_questions": 4,
+  "approved_answers": 0,
+  "source_copy_status": "transcribed from design; not approved",
+  "files": [
+    {
+      "path": "README_START_HERE_AR.md",
+      "bytes": 2801,
+      "sha256": "047d3ee997677968d0569cc743c166caacba5016e1ae95685c599c9f7025abe5"
+    },
+    {
+      "path": "design-reference/assets/phase-07c/qna/source-exports/dashboard-frame-reference-369x209.svg",
+      "bytes": 138002,
+      "sha256": "b48118ba78c69ebe738170ab260d7d297ab63dea55bd824c91b856f3cc42d1d5"
+    },
+    {
+      "path": "design-reference/assets/phase-07c/qna/source-exports/dashboard-original-1352x768.png",
+      "bytes": 104423,
+      "sha256": "71d5699da480624922adaa7337dc45f616f257fcec1b4c38723c77bf01443f4f"
+    },
+    {
+      "path": "design-reference/assets/phase-07c/qna/source-exports/faq-qna-section-reference-1440x1019.svg",
+      "bytes": 505037,
+      "sha256": "f18d03f5d7ab7690c62206987cab8c9382028a170468d33eaaf0b3f902f0f6b9"
+    },
+    {
+      "path": "design-reference/assets/phase-07c/qna/source-exports/qna-diamond-icon-10x12.svg",
+      "bytes": 298,
+      "sha256": "7aee636eee3f7a513427c86bedd7b29a093188ee5756c53486728fd01d9fc4d8"
+    },
+    {
+      "path": "design-reference/notes/phase-07c/qna/figma-qna-screenshot.png",
+      "bytes": 107645,
+      "sha256": "e55056a5f92794a19bbfd6c6e327711746fa39061c3c2dd400ea8df662158dc0"
+    },
+    {
+      "path": "design-reference/notes/phase-07c/qna/qna-section-rendered-1440x1019.png",
+      "bytes": 100617,
+      "sha256": "9f1e6d4fd65e74b9f829ac81ddb5e3db4836a3fb8f5555f96f1392abc49d8b80"
+    },
+    {
+      "path": "docs/PHASE07C_CLAUDE_PROMPT.md",
+      "bytes": 6373,
+      "sha256": "9362f55d49dda95bd4fd0fd6c9ba63fd6894f89076a7d670bb4406852c148c06"
+    },
+    {
+      "path": "docs/PHASE07C_QNA_COPY_REVIEW.md",
+      "bytes": 1706,
+      "sha256": "1679f2fda81a1041f7f41c420181b21780c12ad92bb3236b6953b70565a2e11f"
+    },
+    {
+      "path": "docs/PHASE07C_QNA_DESIGN_SPEC.md",
+      "bytes": 5901,
+      "sha256": "f869d9b197310e187500cd43a9fe6e553c8ddd40746e5675ee686b01d65c723b"
+    },
+    {
+      "path": "public/images/qna/dashboard-screenshot-lossless.webp",
+      "bytes": 43224,
+      "sha256": "6ac1106cc2af226f7b7428fd585035795b9cedd0ef5dedeb67f8cdf58681aa11"
+    },
+    {
+      "path": "public/images/qna/qna-diamond.svg",
+      "bytes": 298,
+      "sha256": "7aee636eee3f7a513427c86bedd7b29a093188ee5756c53486728fd01d9fc4d8"
+    }
+  ]
+}
