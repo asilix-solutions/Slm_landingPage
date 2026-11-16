@@ -70,7 +70,7 @@ export function PricingPlans() {
   const hasWave = existsSync(path.join(process.cwd(), "public", wave.src));
 
   return (
-    <section aria-labelledby="pricing-title" className="pricing">
+    <section id="pricing" aria-labelledby="pricing-title" className="pricing">
       {hasWave && (
         <div className="pricing__wave" aria-hidden="true">
           <Image src={wave.src} alt="" width={wave.width} height={wave.height} unoptimized loading="lazy" />

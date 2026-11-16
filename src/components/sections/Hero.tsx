@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
+import { NavAction } from "@/components/ui/NavAction";
 import { headerActions } from "@/content/navigation";
 import { heroContent } from "@/content/hero";
 import "./hero.css";
@@ -73,13 +74,13 @@ export function Hero() {
           </h1>
           <p className="hero__description">{heroContent.description}</p>
           <div className="hero__actions">
-            <a href={headerActions.primary.href} className="btn btn-primary">
+            <NavAction href={headerActions.primary.href} className="btn btn-primary">
               {headerActions.primary.label}
               <ArrowIcon />
-            </a>
-            <a href={headerActions.secondary.href} className="btn btn-outline">
+            </NavAction>
+            <NavAction href={headerActions.secondary.href} className="btn btn-outline">
               {headerActions.secondary.label}
-            </a>
+            </NavAction>
           </div>
         </div>
 

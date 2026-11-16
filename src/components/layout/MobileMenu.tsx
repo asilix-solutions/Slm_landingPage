@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
+import { NavAction } from "@/components/ui/NavAction";
 import { headerActions, navItems } from "@/content/navigation";
 
 /**
@@ -71,30 +72,30 @@ export function MobileMenu() {
         <nav aria-label="القائمة الرئيسية">
           <ul className="flex flex-col">
             {navItems.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} className="menu-link" onClick={close}>
+              <li key={item.label}>
+                <NavAction href={item.href} className="menu-link" onClick={close}>
                   {item.label}
-                </a>
+                </NavAction>
               </li>
             ))}
           </ul>
         </nav>
         <div className="mt-4 flex flex-col gap-3">
-          <a
+          <NavAction
             href={headerActions.primary.href}
             className="btn btn-primary"
             onClick={close}
           >
             {headerActions.primary.label}
             <ArrowIcon />
-          </a>
-          <a
+          </NavAction>
+          <NavAction
             href={headerActions.secondary.href}
             className="btn btn-outline"
             onClick={close}
           >
             {headerActions.secondary.label}
-          </a>
+          </NavAction>
         </div>
       </div>
     </div>

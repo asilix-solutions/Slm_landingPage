@@ -240,7 +240,7 @@
     white-space: nowrap;
   }
 
-  .site-nav__link:hover {
+  a.site-nav__link:hover {
     text-decoration: underline;
     text-underline-offset: 0.35em;
   }
@@ -288,6 +288,22 @@
 
   .site-header[data-scrolled="true"] .btn-outline:hover {
     background-color: rgb(32 31 55 / 0.06);
+  }
+
+  /* Items without an approved destination (NavAction renders a <span class="is-static">):
+     same look, but no pointer or hover feedback. */
+  .btn.is-static {
+    cursor: default;
+  }
+
+  .btn-primary.is-static:hover {
+    background-color: var(--amx-accent);
+  }
+
+  .btn-outline.is-static:hover,
+  .site-header[data-scrolled="true"] .btn-outline.is-static:hover,
+  .menu-panel .btn-outline.is-static:hover {
+    background-color: transparent;
   }
 
   /* Mobile / tablet menu */

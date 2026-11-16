@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowIcon } from "@/components/ui/ArrowIcon";
+import { NavAction } from "@/components/ui/NavAction";
 import { headerActions, navItems } from "@/content/navigation";
 import { HeaderScrollObserver } from "./HeaderScrollObserver";
 import { MobileMenu } from "./MobileMenu";
@@ -46,24 +47,24 @@ export function SiteHeader() {
           <nav aria-label="التنقل الرئيسي" className="site-nav">
             <ul className="flex items-center gap-7">
               {navItems.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className="site-nav__link">
+                <li key={item.label}>
+                  <NavAction href={item.href} className="site-nav__link">
                     {item.label}
                     {item.hasChevron && <ChevronIcon />}
-                  </a>
+                  </NavAction>
                 </li>
               ))}
             </ul>
           </nav>
 
           <div className="site-actions">
-            <a href={headerActions.primary.href} className="btn btn-primary">
+            <NavAction href={headerActions.primary.href} className="btn btn-primary">
               {headerActions.primary.label}
               <ArrowIcon />
-            </a>
-            <a href={headerActions.secondary.href} className="btn btn-outline">
+            </NavAction>
+            <NavAction href={headerActions.secondary.href} className="btn btn-outline">
               {headerActions.secondary.label}
-            </a>
+            </NavAction>
           </div>
 
           <MobileMenu />

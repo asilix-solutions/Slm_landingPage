@@ -26,6 +26,7 @@
   --pricing-pb: 72px;
 
   position: relative;
+  scroll-margin-top: 5.5rem; /* target of the header «الاسعار» link: clear the fixed header (80/88px) */
   isolation: isolate;
   overflow: clip; /* the 1440px wave can never create horizontal scroll */
   padding: var(--pricing-pt) var(--pricing-gutter) var(--pricing-pb);
